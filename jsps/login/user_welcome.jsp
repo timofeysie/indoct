@@ -1,0 +1,141 @@
+<%@ page contentType="text/html; charSet=euc-kr" %>
+
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+
+<%@ page language="java" import="java.util.Hashtable" %>
+<%@ page language="java" import="java.text.DecimalFormat" %>
+<%@ page language="java" import="org.catechis.Transformer" %>
+<html>
+<head><title><bean:message key="app.name"/> <bean:message key="app.slogan"/></title></head>
+<body>
+<font color="red"><bean:message key="app.under_construction"/></font>
+<jsp:include page="/jsps/includes/start_table.jsp" />
+<table>
+	<td>
+	<!-- inner table for main menu -->
+<table>
+
+	<tr>
+	    <td>
+		<p><a href="/indoct/integrated_test.do"><bean:message key="user_login.integrated_test"/></a>
+	    </td>
+	    <td>
+	    	<IMG SRC="./images/Font-Book-icon.jpg" ALT="" WIDTH=48 HEIGHT=48/>
+	    </td>
+	</tr>
+
+	<tr>
+	    <td>
+	    	<p><a href="/indoct/weekly_list.do"><bean:message key="welcome.weekly_list"/></a>
+		</td>
+	    <td>
+	    	<IMG SRC="./images/Calendar-icon.jpg" ALT="" WIDTH=48 HEIGHT=48/>
+	    </td>
+	</tr>
+	<tr>
+	    <td>
+	    	<p><a href="/indoct/user_categories.do"><bean:message key="welcome.categories"/></a>
+		</td>
+	    <td>
+	    	<IMG SRC="./images/File-Manager-icon.jpg" ALT="" WIDTH=48 HEIGHT=48/>
+	    </td>
+	</tr>
+	<tr>
+	    <td>
+	    	<p>
+		<p>
+		<p><a href="/indoct/history.do"><bean:message key="welcome.stats_history"/></a>
+		</td>
+	    <td>
+	    	<IMG SRC="./images/A-Proper-Journal-Icon-icon.jpg" ALT="" WIDTH=48 HEIGHT=48/>
+	    </td>
+	</tr>
+	<tr>
+	    <td>
+	    	<p><a href="/indoct/user_options.do"><bean:message key="welcome.user_options"/></a></p>
+		</td>
+	    <td>
+	    	<IMG SRC="./images/Gear-icon.jpg" ALT="" WIDTH=48 HEIGHT=48/>
+	    </td>
+	</tr>
+</table>
+<!-- end main menu table -->
+	</td>
+	
+	<td><!-- buffer -->
+	</td>
+	<td><!-- buffer -->
+	</td>
+	
+	<td>
+<!-- begin statistics table -->
+<%
+Hashtable last_record = (Hashtable)session.getAttribute("session_object");
+DecimalFormat formatter = new DecimalFormat("###.##");
+%>
+<table>
+	<tr>
+		<td align=center><bean:message key="welcome.stats.header"/></td>
+	</tr>
+	<tr>
+		<td><a href="/indoct/list.do?filename=all"><bean:message key="welcome.stats.number_of_words"/></a></td>
+		<td><% out.println(last_record.get("number_of_words")); %></td>
+	</tr>
+	
+	<table bgcolor="#FFFFCC">
+	<tr>
+		<td><bean:message key="stats.level"/></td>
+		<td><bean:message key="app.reading"/></td>
+		<td><bean:message key="app.writing"/></td>
+	</tr>
+	
+	<tr>
+		<!-- number of words at each level table -->
+		<tr>
+			<td>0</td>
+			<td><% out.println(last_record.get("words_at_reading_level_0")); %></td>
+			<td><% out.println(last_record.get("words_at_writing_level_0")); %></td>
+		</tr>
+		<tr>
+			<td>1</td>
+			<td><% out.println(last_record.get("words_at_reading_level_1")); %></td>
+			<td><% out.println(last_record.get("words_at_writing_level_1")); %></td>
+		</tr>
+		<tr>
+			<td>2</td>
+			<td><% out.println(last_record.get("words_at_reading_level_2")); %></td>
+			<td><% out.println(last_record.get("words_at_writing_level_2")); %></td>
+		</tr>
+		<tr>
+			<td>3</td>
+			<td><% out.println(last_record.get("words_at_reading_level_3")); %></td>
+			<td><% out.println(last_record.get("words_at_writing_level_3")); %></td>
+		</tr>
+		<tr>
+			<td><bean:message key="welcome.stats.average"/></td>
+			<td><% out.println(formatter.format(Double.parseDouble((String)last_record.get("reading_average")))); %></td>
+			<td><% out.println(formatter.format(Double.parseDouble((String)last_record.get("writing_average")))); %></td>
+		</tr>
+		<!-- end number of words at each level table -->
+	</tr>
+	<tr>
+	
+	<table>
+		<td><tr><bean:message key="welcome.stats.date"/>&nbsp;:&nbsp;</tr>
+		<tr><% out.println(Transformer.simplifyDate((String)last_record.get("date"))); %></tr>
+		<tr><a href="/indoct/recalculate_stats.do"><bean:message key="welcome.stats.recalculate"/></a></tr></td>
+	</table>
+	
+	</tr>
+	</table>
+</table>
+<!-- end statistics table -->
+	</td>
+</table>
+
+<jsp:include page="/jsps/includes/sponsor_end.jsp" />
+
+</body>
+</html>

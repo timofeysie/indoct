@@ -1,0 +1,305 @@
+<%@ page contentType="text/html; charSet=euc-kr" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+<!--jsp:useBean id="file" class="com.businessglue.indoct.TestBean" scope="session"/-->
+<%@ page language="java" import="com.businessglue.util.EncodeString" %>
+<%@ page language="java" import="org.catechis.juksong.TestTimeMemory" %>
+<%@ page language="java" import="org.catechis.dto.WordTestResult" %>
+<%@ page language="java" import="org.catechis.dto.AllWordsTest" %>
+<%@ page language="java" import="org.catechis.Transformer" %>
+<%@ page language="java" import="org.catechis.Domartin" %>
+<%@ page language="java" import="java.util.Enumeration" %>
+<%@ page language="java" import="java.util.Hashtable" %>
+<%@ page language="java" import="java.util.Vector" %>
+<!-- . -->
+<html>
+<head><title><bean:message key="app.name"/> <bean:message key="app.slogan"/></title></head>
+<body>
+<p style="font-size:30pt;">
+
+<%
+
+// this data is used at the end, but if there is a problem, we want to know about it right away.
+// It only happens when a user reverses a test result.
+String waiting_reading_tests = (String)session.getAttribute("waiting_reading_tests");
+String waiting_writing_tests = (String)session.getAttribute("waiting_writing_tests");
+TestTimeMemory test_time_memory = (TestTimeMemory)session.getAttribute("test_time_memory");
+//The ttm is a strange little object with three different formats therefore three ways to get a date (although we don't need the new wntd, as we already know todays date, right?:  
+//newWLTD = Sun Dec 13 14:43:44 KST 2009
+//originalWLTD = 1211258170000
+//originalWNTD = 1237178170000.xml
+//newWNTD = 1286603024000
+String org_wltd = "default";
+
+try
+{
+	org_wltd = Transformer.getDateFromMilliseconds(test_time_memory.getOriginalWLTD());
+} catch (java.lang.NumberFormatException nfe)
+{
+	long milli = Domartin.getMilliseconds(test_time_memory.getOriginalWLTD());
+	org_wltd = Transformer.getDateFromMilliseconds(Long.toString(milli));
+	//out.println("number format exception for original words last test date.");
+}
+String org_wntd = Transformer.getDateFromMilliseconds(Domartin.getFileWithoutExtension(test_time_memory.getOriginalWNTD()));
+String new_wntd = Transformer.getDateFromMilliseconds(test_time_memory.getNewWNTD());
+
+// catch any error with the test dates and alert the user
+try
+{
+	Long org_wntd_long = Long.parseLong(org_wntd);
+	if (org_wntd_long < 604800000)
+	{	
+		//out.println("original words next test date error.");
+	}
+} catch (java.lang.NumberFormatException nfe)
+{
+
+}
+
+try
+{
+	Long org_wltd_long = Long.parseLong(org_wltd);
+	if (org_wltd_long < 604800000)
+	{
+		//out.println("original words last test date error.");
+	}
+} catch (java.lang.NumberFormatException nfe)
+{
+
+}
+
+
+// questsion - correct answer - users answer - change_test.do link
+// reading
+// test - def - users answer - new level - change_test.do link
+// questsion - correct answer - users answer - change_test.do link
+AllWordsTest awt = (AllWordsTest)session.getAttribute("awt_test_word");
+WordTestResult wtr = (WordTestResult)session.getAttribute("wtr");
+//Vector awt = Transformer.createTable(awt_test_word);
+//Vector wtr = Transformer.createTable(wtr);
+String test_text   = new String();
+String test_def    = new String();
+String test_result = new String();
+String index 	   = new String("-1");
+String answer      = wtr.getAnswer();
+// if theres no answer, give us something to turn red 
+if (answer.equals(""))
+{
+	answer = "???";
+	}
+if (awt.getTestType().equals("reading"))
+{
+	test_text = wtr.getText();
+	test_def  = wtr.getDefinition();
+} else
+{
+	test_text = wtr.getDefinition();
+	test_def  = wtr.getText();
+}
+
+String daily_test_index = (String)session.getAttribute("daily_test_index");
+int dsi = Integer.parseInt(daily_test_index)+1;
+daily_test_index = Integer.toString(dsi);
+
+out.println("<font color=\"black\">");
+	out.println("<table>");
+		out.println("<TR>");
+		// index of thw words place in the daily test list
+		out.println("<TD>");
+		out.println(daily_test_index);
+		out.println("</TD>");
+		// question
+		out.println("<TD>");
+		if (awt.getTestType().equals("reading"))
+		{
+			out.println("<font size=\"20\" face=\"gothic\">"+test_text+"</font>");
+		} else
+		{ 
+			out.println("<font size=\"13\" face=\"gothic\">"+test_text+"</font>");
+		}
+		out.println("</TD>");
+		// correct answer
+		out.println("<TD>");
+		if (awt.getTestType().equals("writing"))
+		{
+			out.println("<font size=\"20\" face=\"gothic\">"+test_def+"</font>");
+		} else
+		{ 
+			out.println("<font size=\"13\" face=\"gothic\">"+test_def+"</font>");
+		}
+		out.println("</TD>");
+		out.println("</TR>");
+		
+		// old word level
+		out.println("<TR>");
+		out.println("<TD>");
+		%><bean:message key="daily_test_result.old_level"/><%
+		out.println("</TD>");
+		out.println("<TD>");
+		if (awt.getTestType().equals("reading"))
+		{
+			%><bean:message key="stats.reading"/><%
+		} else
+		{
+			%><bean:message key="stats.writing"/><%
+		}
+		out.println(" "+wtr.getOriginalLevel());
+		out.println("</TD>");
+		
+		// user answer
+		out.println("<TD>");
+		if (wtr.getGrade().equals("pass"))
+		{
+			out.println("<font color=\"green\">");
+		} else
+		{
+			out.println("<font color=\"red\">");
+		}
+		out.println(answer);
+		out.println("</font>");
+		out.println("</TD>");
+		out.println("<font color=\"black\">");
+		out.println("</TR>");
+		
+		// new word level
+		out.println("<TR>");
+		out.println("<TD>");
+		%><bean:message key="daily_test_result.new_level"/><%
+		out.println("</TD>");
+		out.println("<TD>");
+		if (awt.getTestType().equals("reading"))
+		{
+			%><bean:message key="stats.reading"/><%
+		} else
+		{
+			%><bean:message key="stats.writing"/><%
+		}
+		out.println(" "+wtr.getLevel()); 
+		out.println("</TD>");
+		out.println("</TR>");
+		// test file
+		out.println("<TR>");
+		out.println("<TD>");
+		%><bean:message key="daily_test_result.category"/><%
+		out.println("</TD>");
+		out.println("<TD>");
+		out.println(awt.getCategory());
+		out.println("</TD>");
+		out.println("</TR>");
+	out.println("</table>");
+	
+String word_color = (String)session.getAttribute("word_color");
+//out.println("<p>"+word_color);
+out.println("<table bgcolor=\""+word_color+"\">");
+%>
+<tr>
+<td>
+<IMG SRC="./images/legs/squid.png" ALT="" WIDTH=83 HEIGHT=94/>
+</td>
+</tr>
+</table>
+<p>
+<a href="/indoct/integrated_test.do"><bean:message key="integrated_test.next_test"/></a>
+<p>
+<a href="/indoct/change_update_score.do"><bean:message key="daily_test_result.change_test"/></a>
+<p>
+<a href="/indoct/edit_text_or_def_setup.do?type=text"><bean:message key="daily_test_result.edit_text"/></a>&nbsp;&nbsp;
+<a href="/indoct/edit_text_or_def_setup.do?type=def"><bean:message key="daily_test_result.edit_def"/></a>
+<p>
+<a href="/indoct/retire_word.do"><bean:message key="daily_test_result.retire_word_link"/></a>
+<p>
+<a href="/indoct/jsps/testing/daily_test_quest_word_lookup.jsp"><bean:message key="daily_test_result.question_word_lookup"/></a>
+<p>
+<a href="/indoct/welcome.jsp"><bean:message key="add_word.return_to_main"/>
+
+<%
+// contains missed words
+out.println("<table>");
+		
+Hashtable r_words_defs = (Hashtable)session.getAttribute("r_words_defs");
+Hashtable w_words_defs = (Hashtable)session.getAttribute("w_words_defs");
+if (r_words_defs.size()>0||w_words_defs.size()>0)
+{
+	// missed words marker
+	out.println("<tr><td>");
+	%>
+	<p><b><bean:message key="weekly_list.words_defs"/></b>
+	<%
+}
+out.println("<td/>");
+out.println("<td></td></tr>");
+for (Enumeration r_e = r_words_defs.keys() ; r_e.hasMoreElements() ;)
+	    {
+		    String r_key = (String)r_e.nextElement();
+		    String r_val = (String)r_words_defs.get(r_key);
+		    out.println("<tr><td>");
+		    out.println("<p>"+r_key);
+		    out.println("</td>");
+		    out.println("<td>");
+		    out.println("<p>"+r_val);
+		    out.println("</td></tr>");
+	    }
+for (Enumeration e = w_words_defs.keys() ; e.hasMoreElements() ;) 
+	    {
+		    String key = (String)e.nextElement();
+		    String val = (String)w_words_defs.get(key);
+		    out.println("<tr><td>");
+		    out.println("<p>"+val);
+		    out.println("</td>");
+		    out.println("<td>");
+		    out.println("<p>"+key);
+		    out.println("</td></tr>");
+	    }
+out.println("</table>");
+
+if (awt.getTestType().equals("reading"))
+{
+%>
+<p><a href="/indoct/clear_missed_words.do?type=reading"><bean:message key="options.clear_reading_missed_words"/></a></p>
+<%
+} else if (awt.getTestType().equals("writing"))
+{
+%>
+<p><a href="/indoct/clear_missed_words.do?type=writing"><bean:message key="options.clear_writing_missed_words"/></a></p>
+<%
+}
+
+// print out rate of testing vectors ----------------------------------------
+Vector rot_reading_vector = (Vector)session.getAttribute("rot_reading_vector");
+Vector rot_writing_vector = (Vector)session.getAttribute("rot_writing_vector");
+out.println("<table>");
+int size = rot_reading_vector.size(); // should be 3, right?
+int r = 0;
+while (r<size)
+{
+	out.println("<tr><td>"+r+"</td>");
+	out.println("<td>"+Domartin.getBriefElapsedTime((String)rot_reading_vector.get(r))+"</td>");
+	out.println("<td>"+Domartin.getBriefElapsedTime((String)rot_writing_vector.get(r))+"</td>");
+	out.println("</td></tr>");
+	r++;
+}
+out.println("</table>");
+
+// data setup above
+
+out.println("<table>");
+out.println("<tr>");
+out.println("<td>waiting reading</td>");
+out.println("<td>waiting writing</td>");
+out.println("<td>original_wltd</td>");
+out.println("<td>original_wntd</td>");
+out.println("<td>new_wntd</td>");
+out.println("</tr>");
+out.println("<tr>");
+out.println("<td>"+waiting_reading_tests+"</td>");
+out.println("<td>"+waiting_writing_tests+"</td>");
+out.println("<td>"+org_wltd+"</td>");
+out.println("<td>"+org_wntd+"</td>");
+out.println("<td>"+new_wntd+"</td>");
+out.println("</tr>");
+out.println("</table>");
+%>
+
+</body>
+</html>

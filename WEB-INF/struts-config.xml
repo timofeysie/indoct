@@ -1,0 +1,880 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+<struts-config>
+  <!-- ========== Form Bean Definitions =================================== -->
+  <form-beans>
+    <form-bean      name="submitForm"
+                        type="myproject.SubmitForm"/>
+    <form-bean      name="loginForm"
+                        type="com.businessglue.struts.LoginForm"/>
+    <form-bean      name="testForm"
+                        type="com.businessglue.struts.TestForm"/>
+    <form-bean      name="FilterListForm"
+                        type="com.businessglue.struts.FilterListForm"/>
+    <form-bean      name="FilterFileForm"
+                        type="com.businessglue.struts.FilterFileForm"/>
+    <form-bean    name="FilterTestRunForm"
+            type="com.businessglue.struts.FilterTestRunForm"/>
+    <form-bean      name="addWordForm"
+                        type="com.businessglue.struts.AddWordForm"/>
+    <form-bean      name="addNewUserForm"
+                        type="com.businessglue.struts.AddNewUserForm"/>
+    <form-bean      name="addCategoryForm"
+                        type="com.businessglue.struts.AddCategoryForm"/>
+    <form-bean      name="importListForm"
+                        type="com.businessglue.struts.ImportListForm"/>
+    <form-bean      name="dailyTestForm"
+                        type="com.businessglue.struts.DailyTestForm"/>
+    <form-bean     name="editOptionForm"  
+            type="com.businessglue.struts.options.EditOptionForm" />
+    <form-bean      name="createDailyTestForm"
+                        type="com.businessglue.struts.testing.CreateDailyTestForm"/>
+    <form-bean      name="createIntegratedTestForm"
+                        type="com.businessglue.struts.testing.CreateIntegratedTestForm"/>                    
+    <form-bean     name="editELTOptionsForm"  
+            type="com.businessglue.struts.options.EditELTOptionsForm" />
+    <form-bean      name="addTypeCategoryForm"
+                        type="com.businessglue.struts.manager.AddTypeCategoryForm"/>
+    
+    <!-- ADMIN FORMS -->
+    <form-bean      name="addUsersOptionsForm"
+                        type="com.businessglue.struts.admin.AddUsersOptionsForm"/>
+    <form-bean      name="usersOptionsEditForm"
+                        type="com.businessglue.struts.admin.UsersOptionsEditForm"/>
+            
+            <!-- From Validator Example: Registration form bean -->
+    <form-bean     name="registrationForm"  
+            type="org.apache.struts.webapp.validator.RegistrationForm" />
+  </form-beans>
+  <!-- ========== Action Mapping Definitions ============================== -->
+  <action-mappings>
+    <action    path="/submit"
+               type="myproject.SubmitAction"
+               name="submitForm"
+              scope="request"
+              input="/submit.jsp">
+    <forward name="success" path="/submit.jsp"/>
+    </action>
+     
+    <action    path="/login"
+               type="com.businessglue.struts.LoginAction"
+               name="loginForm"
+              scope="request"
+              input="/login.jsp">
+    <forward name="success" path="/welcome.jsp"/>
+    <forward name="admin" path="/jsps/admin/welcome_admin.jsp"/>
+    <forward name="teacher" path="/jsps/teacher/welcome_teacher.jsp"/>
+    <forward name="failure" path="/error.jsp"/>
+    </action>
+    
+    <!-- Android app method to get a user's name and status. -->
+    <action    path="/remote_login"
+               type="com.businessglue.struts.login.RemoteLoginAction"
+              scope="request"
+              input="/welcome_old.jsp">
+    <forward name="success" path="/jsps/login/remote_login.jsp"/>
+    <forward name="failure" path="/error.jsp"/>
+    </action>
+    
+    <!-- Android app method to get a list of saved tests for every class. -->
+    <action    path="/saved_tests_list"
+               type="com.businessglue.struts.remote.SavedTestsListAction"
+              scope="request"
+              input="/welcome_old.jsp">
+    <forward name="success" path="/jsps/login/remote_login.jsp"/>
+    <forward name="failure" path="/error.jsp"/>
+    </action>
+    
+    <!-- Android app method to get a set of a particular set of saved tests. --> 
+     <action    path="/get_saved_class_tests"
+               type="com.businessglue.struts.remote.GetSavedClassTestsAction"
+              scope="request"
+              input="/welcome_old.jsp">
+    <forward name="success" path="/jsps/login/remote_login.jsp"/>
+    <forward name="failure" path="/error.jsp"/>
+    </action>
+    
+     <!-- Android app method to get a set of a particular set of saved tests. --> 
+     <action    path="/get_test_words"
+               type="com.businessglue.struts.remote.GetTestWordsAction"
+              scope="request"
+              input="/welcome_old.jsp">
+    <forward name="success" path="/jsps/login/remote_login.jsp"/>
+    <forward name="failure" path="/error.jsp"/>
+    </action>
+    
+    <!-- Android app method to get a list of student id-name pairs. --> 
+     <action    path="/student_names"
+               type="com.businessglue.struts.remote.StudentNamesAction"
+              scope="request"
+              input="/welcome_old.jsp">
+    <forward name="student_names" path="/jsps/login/remote_login.jsp"/>
+    </action>
+    
+    <!-- Retrieve word_id, deck_card_id values to add to a saved_test -->
+    <action    path="/word_deck_card_associations"
+               type="com.businessglue.struts.remote.WordDeckCardAssociationsAction"
+           scope="request">
+    <forward name="not_used" path="/jsps/categories/exclusive_category.jsp"/>
+    </action>
+    
+    <!-- Android app method to send all house decks. --> 
+     <action    path="/save_house_decks"
+               type="com.businessglue.struts.remote.SaveHouseDecksAction"
+              scope="request"
+              input="/welcome_old.jsp">
+    <forward name="success" path="/jsps/login/remote_login.jsp"/>
+    </action>
+    
+    <!-- Android app method to get all house decks. --> 
+     <action    path="/get_house_decks"
+               type="com.businessglue.struts.remote.GetHouseDecksAction"
+              scope="request"
+              input="/welcome_old.jsp">
+    <forward name="success" path="/jsps/login/remote_login.jsp"/>
+    </action>
+    
+     <!-- Android app method to get student options. --> 
+     <action    path="/student_options"
+               type="com.businessglue.struts.remote.StudentOptionsAction"
+              scope="request"
+              input="/welcome_old.jsp">
+    <forward name="student_options" path="/jsps/login/remote_login.jsp"/>
+    </action>
+    
+    <!-- Android app method to get a single word to test. --> 
+     <action    path="/single_word_test"
+               type="com.businessglue.struts.remote.SingleWordTestAction"
+              scope="request"
+              input="/welcome_old.jsp">
+    <forward name="single_word_test" path="/jsps/login/remote_login.jsp"/>
+    </action>
+    
+    <!-- Android app method to score a single word to test. --> 
+     <action    path="/single_word_test_result"
+               type="com.businessglue.struts.remote.SingleWordTestResultAction"
+              scope="request"
+              input="/welcome_old.jsp">
+    <forward name="single_word_test" path="/jsps/login/remote_login.jsp"/>
+    </action>
+    
+    <action    path="/file"
+               type="com.businessglue.struts.FileAction"
+           name="file"
+           scope="request"
+           input="file.jsp">
+    <forward name="open" path="/file.jsp"/>
+    <forward name="parse_text" path="/parse_text.jsp"/>
+    <forward name="options" path="/options.jsp"/>
+    <forward name="test" path="/test.jsp"/>
+    <forward name="text" path="/text.jsp"/>
+    </action>
+    
+    <action    path="/xml_file"
+               type="com.businessglue.struts.manager.XMLFileAction"
+           name="file"
+           scope="request"
+           input="file.jsp">
+    <forward name="open" path="/file.jsp"/>
+    </action>
+     
+    <action    path="/list"
+               type="com.businessglue.struts.manager.ListAction"
+           name="list"
+           scope="request"
+           input="/list.jsp">
+    <forward name="list" path="/list.jsp"/>
+    </action>
+     
+    <action    path="/add_word"
+               type="com.businessglue.struts.AddWordAction"
+           name="addWordForm"
+           scope="request"
+           input="/add_word.jsp">
+    <forward name="add_word" path="/add_word.jsp"/>
+    </action>
+     
+    <action    path="/add_category"
+               type="com.businessglue.struts.AddCategoryAction"
+           name="addCategoryForm"
+           scope="request"
+           input="/add_category.jsp">
+    <forward name="categories_simple" path="/jsps/categories/categories_simple.jsp"/>
+    </action>
+     
+    <action    path="/add_new_user"
+               type="com.businessglue.struts.AddNewUserAction"
+           name="addNewUserForm"
+           scope="request"
+           input="/add_new_user.jsp">
+    <forward name="pass" path="/welcome.jsp"/>
+    <forward name="fail" path="/jsps/add_new_user.jsp"/>
+    </action>
+     
+    <action    path="/add_new_user_setup"
+               type="com.businessglue.struts.AddNewUserSetupAction"
+           scope="request">
+    <forward name="add_new_user" path="/jsps/add_new_user.jsp"/>
+    </action>
+     
+    <action    path="/import_list"
+               type="com.businessglue.struts.ImportListAction"
+           name="importListForm"
+           scope="request"
+           input="/import_list.jsp">
+    <forward name="file" path="/file.jsp"/>
+    </action>
+     
+    <action    path="/edit_word_setup"
+               type="com.businessglue.struts.EditWordSetupAction"
+           scope="request"
+           input="/daily_test_result.jsp">
+    <forward name="edit_word" path="/edit_word.jsp"/>
+    </action>
+     
+    <action    path="/edit_word"
+               type="com.businessglue.struts.EditWordAction"
+           name="dailyTestForm"
+           scope="session"
+           input="/edit_word.jsp">
+    <forward name="stats_word" path="/stats_word.jsp"/>
+    </action>
+     
+    <action    path="/edit_text_or_def_setup"
+               type="com.businessglue.struts.EditTextOrDefSetupAction"
+           scope="request"
+           input="/daily_test_result.jsp">
+    <forward name="edit_text_or_def" path="/edit_text_or_def.jsp"/>
+    </action>
+     
+    <action    path="/edit_text_or_def"
+               type="com.businessglue.struts.EditTextOrDefAction"
+           name="dailyTestForm"
+           scope="session"
+           input="/edit_text_or_def.jsp">
+    <forward name="daily_test_result" path="/daily_test_result.jsp"/>
+    <forward name="integrated_test_result" path="/jsps/testing/integrated_test_result.jsp"/>
+    </action>
+     
+    <action    path="/edit_word_confirm"
+               type="com.businessglue.struts.EditWordConfirmAction"
+           name="addWordForm"
+           scope="session"
+           input="/edit_word.jsp">
+    <forward name="edit_word_confirm" path="/jsps/edit_word_confirm.jsp"/>
+    </action>
+     
+    <action    path="/delete_word"
+               type="com.businessglue.struts.DeleteWordAction"
+           scope="request"
+           input="/delete_word.jsp">
+    <forward name="categories_simple" path="/categories_simple.jsp"/>
+    </action>
+    
+    <action    path="/delete_word_confirm"
+               type="com.businessglue.struts.manager.DeleteWordConfirmAction"
+           scope="request"
+           input="/delete_word.jsp">
+    <forward name="delete_word_confirm" path="/jsps/categories/delete_word_confirm.jsp"/>
+    </action>
+    
+    <action    path="/delete_word_undo"
+               type="com.businessglue.struts.manager.DeleteWordUndoAction"
+           scope="request"
+           input="/delete_word.jsp">
+    <forward name="delete_word_undo" path="/jsps/categories/found_words.jsp.jsp"/>
+    </action>
+     
+    <action    path="/change_test"
+               type="com.businessglue.struts.ChangeTestAction"
+           name="change_test"
+           scope="request"
+           input="change_test.jsp">
+    <forward name="change_test" path="/change_test.jsp"/>
+    </action>
+     
+    <!--  This action reverses only the test score and the word level -->
+    <action    path="/change_update_score"
+               type="com.businessglue.struts.ChangeUpdateScoreAction"
+           name="change_update_score"
+           scope="request">
+    <forward name="daily_test_result" path="/daily_test_result.jsp"/>
+    <forward name="integrated_test_result" path="/jsps/testing/integrated_test_result.jsp"/>
+    </action>
+     
+    <action    path="/change_update"
+               type="com.businessglue.struts.ChangeUpdateAction"
+           name="change_update"
+           scope="request"
+           input="change_update.jsp">
+    <forward name="change_update" path="/change_test.jsp"/>
+    <forward name="test_result_writing" path="/test_result_writing.jsp"/>
+    <forward name="test_result_reading" path="/test_result_reading.jsp"/>
+    <forward name="daily_test_result" path="/daily_test_result.jsp"/>
+    </action>     
+     
+    <action    path="/filter_list"
+               type="com.businessglue.struts.FilterListAction"
+           name="FilterListForm"
+           scope="request"
+           input="filter_list.jsp">
+    <forward name="filter_list" path="/filter_list.jsp"/>
+    </action>
+     
+    <action    path="/history"
+               type="com.businessglue.struts.HistoryAction"
+           input="history.jsp">
+    <forward name="open" path="/history.jsp"/>
+    </action>
+     
+     
+    <action    path="/filter_test"
+               type="com.businessglue.struts.FilterTestAction"
+           input="filter_test.jsp">
+    <forward name="filter_test" path="/filter_test.jsp"/>
+    </action>
+     
+    <action    path="/filter_test_run"
+               type="com.businessglue.struts.FilterTestRunAction"
+           name="FilterTestRunForm"
+           scope="request"
+           input="filter_test.jsp">
+    <forward name="filter_test_run" path="/filter_test_run.jsp"/>
+    </action>
+     
+    <action    path="/all_words_test"
+               type="com.businessglue.struts.AllWordsTestAction"
+           scope="request"
+           input="filter_test.jsp">
+    <forward name="all_words_test" path="/all_words_test.jsp"/>
+    </action>
+     
+    <action    path="/system"
+               type="com.businessglue.struts.SystemAction"
+           name="system"
+           scope="request"
+           input="system.jsp">
+    <forward name="system" path="/system.jsp"/>
+    </action>
+    <action    path="/choose_test_file"
+               type="com.businessglue.struts.ChooseTestFileAction"
+           name="choose_test_file"
+           scope="request"
+           input="choose_test_file.jsp">
+    <forward name="choose_test_file" path="/choose_test_file.jsp"/>
+    </action>
+     
+    <action    path="/run_test"
+               type="com.businessglue.struts.TestAction"
+           name="run_test"
+           scope="request"
+           input="run_test.jsp">
+    <forward name="run_test" path="/run_test.jsp"/>
+    <forward name="run_reading_test" path="/run_reading_test.jsp"/>
+    <forward name="run_writing_test" path="/run_writing_test.jsp"/>
+    </action>
+    <action    path="/test_result"
+               type="com.businessglue.struts.TestResultAction"
+           name="testForm"
+           scope="request"
+           input="run_test.jsp">
+    <forward name="test_result" path="/test_result.jsp"/>
+    <forward name="test_result_writing" path="/test_result_writing.jsp"/>
+    <forward name="test_result_reading" path="/test_result_reading.jsp"/>
+    </action>
+    <action    path="/filter_file"
+               type="com.businessglue.struts.FilterFileAction"
+           name="FilterFileForm"
+           scope="request"
+           input="filter_file.jsp">
+    <forward name="filter_file" path="/filter_file.jsp"/>
+    </action>
+    <action    path="/stats"
+               type="com.businessglue.struts.StatsAction"
+               name="stats"
+              scope="request"
+              input="stats.jsp">
+    <forward name="stats" path="/stats.jsp"/>
+    </action>
+     
+    <action    path="/stats_word"
+               type="com.businessglue.struts.StatsWordAction"
+               name="stats_word"
+              scope="session"
+              input="stats_word.jsp">
+    <forward name="stats_word" path="/stats_word.jsp"/>
+    </action>
+     
+    <action    path="/daily_test"
+               type="com.businessglue.struts.DailyTestAction"
+           name="dailyTestForm"
+           scope="request"
+           input="daily_test.jsp">
+           <forward name="daily_test" path="/daily_test.jsp"/>
+    </action>
+     
+    <action    path="/daily_test_result"
+               type="com.businessglue.struts.DailyTestResultAction"
+           name="dailyTestForm"
+           scope="request"
+           input="daily_test_result.jsp">
+           <forward name="daily_test_result" path="/daily_test_result.jsp"/>
+           <forward name="daily_test_frameset" path="/jsps/testing/daily_test_result_frameset.jsp"/>
+    </action>
+     
+    <!-- IntegratedTest sequence -->
+    <action    path="/user_login"
+               type="com.businessglue.struts.login.UserLoginAction"
+               name="loginForm"
+              scope="request"
+              input="user_login.jsp">
+    <forward name="success" path="/jsps/login/user_welcome.jsp"/>
+    <forward name="admin" path="/jsps/admin/welcome_admin.jsp"/>
+    <forward name="failure" path="/error.jsp"/>
+    </action>
+     
+    <action    path="/integrated_test"
+               type="com.businessglue.struts.testing.IntegratedTestAction"
+           name="dailyTestForm"
+           scope="request"
+           input="jsps/testing/integrated_test.jsp">
+           <forward name="integrated_test" path="/jsps/testing/integrated_test.jsp"/>
+           <forward name="integrated_test_null_id" path="/welcome.jsp"/>
+           <forward name="integrated_test_time_til_next_allowed_test" path="/jsps/testing/integrated_test_time_til_next_allowed_test.jsp"/>
+    </action>
+     
+    <action    path="/integrated_test_result"
+               type="com.businessglue.struts.testing.IntegratedTestResultAction"
+           name="dailyTestForm"
+           scope="request"
+           input="integrated_test_result.jsp">
+           <forward name="integrated_test_result" path="/jsps/testing/integrated_test_result.jsp"/>
+    </action>
+     
+    <!-- User Manager pages -->
+    <action    path="/user_categories"
+               type="com.businessglue.struts.manager.UserCategoriesAction"
+           scope="request">
+    <forward name="user_categories" path="/jsps/categories/user_categories.jsp"/>
+    </action>
+     
+    <action    path="/user_import_words"
+               type="com.businessglue.struts.manager.UserImportWordsAction"
+           scope="request"
+           name="importListForm">
+    <forward name="back_to_list" path="/jsps/categories/user_file.jsp"/>
+    </action>
+     
+    <action    path="/user_file"
+               type="com.businessglue.struts.manager.UserWordListAction"
+           scope="request">
+    <forward name="open" path="/jsps/categories/user_file.jsp"/>
+    </action>
+     
+    <!-- This Action retires a word from heavy rotation, which means the user feels
+    confident and has learned the word definively.-->
+    <action    path="/retire_word"
+               type="com.businessglue.struts.RetireWordAction"
+           scope="request">
+    <forward name="daily_test_result" path="/daily_test_result.jsp"/>
+    <forward name="integrated_test_result" path="/jsps/testing/integrated_test_result.jsp"/>
+    </action>
+     
+    <action    path="/weekly_list"
+               type="com.businessglue.struts.WeeklyListAction"
+           scope="request"
+           input="weekly_list.jsp">
+    <forward name="weekly_list" path="/weekly_list.jsp"/>
+    </action>
+     
+    <action    path="/weekly_list_format"
+               type="com.businessglue.struts.WeeklyListFormatAction"
+           scope="request"
+           input="weekly_list_format.jsp">
+    <forward name="weekly_list_format" path="/jsps/lists/weekly_list_format.jsp"/>
+    <forward name="weekly_list_format_reading" path="/jsps/lists/weekly_list_format_reading.jsp"/>
+    </action>
+     
+    <action    path="/categories_simple"
+               type="com.businessglue.struts.CategoriesSimpleAction"
+           scope="request">
+    <forward name="categories_simple" path="/jsps/categories/categories_simple.jsp"/>
+    </action>
+     
+    <action    path="/categories"
+               type="com.businessglue.struts.CategoriesAction"
+           scope="request">
+    <forward name="categories" path="/jsps/categories/categories.jsp"/>
+    </action>
+    
+    <action    path="/manage_categories"
+               type="com.businessglue.struts.manager.ManageCategoriesAction"
+           scope="request">
+    <forward name="manage_categories" path="/jsps/categories/manage_categories.jsp"/>
+    </action>
+    
+    <action    path="/exclusive_category"
+               type="com.businessglue.struts.manager.ExclusiveCategoryAction"
+           scope="request">
+    <forward name="exclusive_category" path="/jsps/categories/exclusive_category.jsp"/>
+    </action>
+    
+    <action    path="/add_type_category"
+               type="com.businessglue.struts.manager.AddTypeCategoryAction"
+               name="addTypeCategoryForm"
+           scope="request">
+    <forward name="exclusive_category" path="/jsps/categories/exclusive_category.jsp"/>
+    <forward name="non_exclusive_category" path="/jsps/categories/non_exclusive_category.jsp"/>
+    </action>
+    
+    <action    path="/add_categories"
+               type="com.businessglue.struts.manager.AddCategoriesAction"
+           scope="request">
+    <forward name="add_categories" path="/jsps/categories/add_categories.jsp"/>
+    </action>
+    
+    <action    path="/merge_categories"
+               type="com.businessglue.struts.manager.MergeCategoriesAction"
+           scope="request">
+    <forward name="exclusive_category" path="/jsps/categories/exclusive_category.jsp"/>
+    </action>
+     
+    <action    path="/missed_words"
+               type="com.businessglue.struts.MissedWordsAction"
+           scope="request">
+    <forward name="missed_words" path="/jsps/categories/missed_words.jsp"/>
+    </action>
+     
+    <action    path="/tests"
+               type="com.businessglue.struts.TestsAction"
+           scope="request">
+    <forward name="tests" path="/jsps/testing/tests.jsp"/>
+    </action>
+     
+    <action    path="/word_stats"
+               type="com.businessglue.struts.WordStatsAction"
+           scope="request">
+    <forward name="word_stats" path="/jsps/stats/word_stats.jsp"/>
+    </action>
+     
+    <action    path="/user_options"
+               type="com.businessglue.struts.UserOptionsAction"
+           scope="request">
+    <forward name="options" path="/options.jsp"/>
+    </action>
+     
+    <action    path="/edit_elt_options"
+               type="com.businessglue.struts.options.EditELTOptionsAction"
+               name="editELTOptionsForm"
+           scope="request"
+           input="jsps/options/edit_elt_options.jsp">
+    <forward name="edit_elt_options_confirm" path="/jsps/options/edit_elt_options_confirm.jsp"/>
+    </action>
+     
+    <action    path="/update_options"
+               type="com.businessglue.struts.options.UpdateOptionsAction"
+               name="editELTOptionsForm"
+           scope="request"
+           input="/jsps/options/edit_elt_options.jsp">
+    <forward name="edit_elt_options_confirm" path="/jsps/options/edit_elt_options_confirm.jsp"/>
+    </action>
+     
+    <action    path="/update_options_confirm"
+               type="com.businessglue.struts.options.UpdateOptionsConfirmAction"
+           scope="request">
+    <forward name="options" path="/options.jsp"/>
+    </action>
+ 
+     
+    <!-- This object gets the options of all the users and passes them  
+    to the options page-->
+    <action    path="/users_options"
+               type="com.businessglue.struts.UsersOptionsAction"
+           scope="request">
+    <forward name="users_options" path="/jsps/admin/users_options.jsp"/>
+    </action>
+     
+    <!-- This action will recieve3 input from a selection list of properties and a new value,
+    check the value and then forward to a confirm page.-->
+    <action    path="/users_options_edit"
+               type="com.businessglue.struts.admin.UsersOptionsEditAction"
+           name="usersOptionsEditForm"
+           scope="request"
+           input="admin/users_options_edit.jsp">
+    <forward name="users_options_edit_confirm" path="/jsps/admin/users_options_edit_confirm.jsp"/>
+    </action>
+     
+    <!-- Confirm the change.-->
+    <action    path="/users_options_edit_confirm"
+               type="com.businessglue.struts.admin.UsersOptionsEditConfirmAction"
+           scope="request">
+    <forward name="users_options_edit" path="/jsps/admin/users_options_edit.jsp"/>
+    </action>
+     
+    <action    path="/clear_missed_words"
+               type="com.businessglue.struts.ClearMissedWordsAction"
+           scope="request">
+    <forward name="users_options" path="/options.jsp"/>
+    <forward name="daily_test_result" path="/daily_test_result.jsp"/>
+    <forward name="integrated_test_result" path="/jsps/testing/integrated_test_result.jsp"/>
+    </action>
+     
+    <action    path="/users_details"
+               type="com.businessglue.struts.UsersDetailsAction"
+           scope="request">
+    <forward name="users_details" path="/jsps/admin/users_details.jsp"/>
+    </action>
+     
+    <action    path="/logins_records"
+               type="com.businessglue.struts.LoginsRecordsAction"
+           scope="request">
+    <forward name="logins_records" path="/jsps/admin/logins_records.jsp"/>
+    </action>
+     
+    <action    path="/logins_refresh"
+               type="com.businessglue.struts.LoginsRefreshAction"
+           scope="request">
+    <forward name="welcome_admin" path="/jsps/admin/welcome_admin.jsp"/>
+    </action>
+     
+    <action    path="/recalculate_stats"
+               type="com.businessglue.struts.RecalculateStatsAction"
+           scope="request">
+    <forward name="welcome" path="/welcome.jsp"/>
+    <forward name="student_details" path="/jsps/teacher/student_details.jsp"/>
+    </action>
+     
+    <action    path="/reset_login_entries"
+               type="com.businessglue.struts.ResetLoginEntriesAction"
+           scope="request">
+    <forward name="welcome_admin" path="/jsps/admin/welcome_admin.jsp"/>
+    </action>
+     
+    <action    path="/add_users_options"
+               type="com.businessglue.struts.admin.AddUsersOptionsAction"
+           name="addWordForm"
+           scope="request"
+           input="/add_users_options.jsp">
+    <forward name="welcome_admin" path="/jsps/admin/welcome_admin.jsp"/>
+    </action>
+     
+    <action    path="/edit_option_setup"
+               type="com.businessglue.struts.options.EditOptionSetupAction"
+           scope="request">
+    <forward name="edit_option" path="/jsps/options/edit_option.jsp"/>
+    </action>
+     
+    <action path="/edit_option"  
+            type="com.businessglue.struts.options.EditOptionAction"  
+            name="editOptionForm"  
+        scope="request"  
+        validate="true"  
+        input="input">
+      <forward name="success" path="/options.jsp" />
+      <forward name="failure" path="/jsps/options/edit_option.jsp"/>
+    </action>
+     
+    <!-- create daily test to save. -->
+    <action    path="/create_daily_test"
+               type="com.businessglue.struts.testing.CreateDailyTestAction"
+               name="createDailyTestForm"
+           scope="request">
+      <forward name="create_daily_test" path="/jsps/testing/create_daily_test.jsp"/>
+      <forward name="teacher_create_daily_test" path="/jsps/teacher/teacher_create_daily_test.jsp"/>
+    </action>
+    
+    <!-- create integrated test and save. -->
+    <action    path="/create_integrated_test"
+               type="com.businessglue.struts.testing.CreateIntegratedTestAction"
+               name="createIntegratedTestForm"
+           scope="request">
+      <forward name="create_integrated_test" path="/jsps/testing/create_integrated_test.jsp"/>
+      <forward name="teacher_create_integrated_test" path="/jsps/teacher/teacher_create_integrated_test.jsp"/>
+    </action>
+    
+    <action    path="/create_integrated_test_save"
+               type="com.businessglue.struts.testing.CreateIntegratedTestSaveAction"
+           scope="request">
+      <forward name="created_integrated_tests" path="/jsps/testing/created_integrated_tests.jsp"/>
+      <forward name="teacher_created_integrated_tests" path="/jsps/teacher/teacher_created_integrated_tests.jsp"/>
+    </action>
+    
+    <action    path="/created_integrated_tests"
+               type="com.businessglue.struts.testing.CreatedIntegratedTestAction"
+           scope="request">
+      <forward name="created_integrated_tests" path="/jsps/testing/created_integrated_tests.jsp"/>
+      <forward name="teacher_created_integrated_tests" path="/jsps/teacher/teacher_created_integrated_tests.jsp"/>
+    </action>
+    
+    <action    path="/created_integrated_test_display"
+               type="com.businessglue.struts.testing.CreatedIntegratedTestDisplayAction"
+           scope="request">
+      <forward name="created_integrated_test_display" path="/jsps/testing/created_integrated_test_display.jsp"/>
+    </action>
+    
+    <action    path="/created_integrated_test_score"
+               type="com.businessglue.struts.testing.CreatedIntegratedTestScoreAction"
+           scope="request">
+      <forward name="created_integrated_test_score" path="/jsps/testing/created_integrated_test_score.jsp"/>
+    </action>
+    
+    <action    path="/created_game_cards"
+               type="com.businessglue.struts.testing.CreatedGameCardsAction"
+           scope="request">
+      <forward name="created_game_cards" path="/jsps/testing/created_game_cards.jsp"/>
+    </action>
+    
+    <action    path="/created_integrated_test_result"
+               type="com.businessglue.struts.testing.CreatedIntegratedTestResultAction"
+           scope="request">
+      <forward name="created_integrated_test_result" path="/jsps/testing/created_integrated_test_result.jsp"/>
+    </action>
+    
+    <action    path="/created_integrated_test_result_score"
+               type="com.businessglue.struts.testing.CreatedIntegratedTestResultScoreAction"
+           scope="request">
+    <forward name="created_integrated_tests" path="/jsps/testing/created_integrated_tests.jsp"/>
+    <forward name="saved_tests_for_classes" path="/jsps/teacher/saved_class_tests.jsp"/>
+    </action>
+    
+    <!-- go directly to the list of saved tests -->
+    <action    path="/created_tests"
+               type="com.businessglue.struts.testing.CreatedTestsAction"
+           scope="request">
+      <forward name="created_integrated_tests" path="/jsps/testing/created_integrated_tests.jsp"/>
+    </action>
+    
+    <action    path="/find_word"
+               type="com.businessglue.struts.manager.FindWordAction"
+           name="addCategoryForm"
+           scope="request"
+           input="/found_word.jsp">
+    <forward name="found_words" path="/jsps/categories/found_words.jsp"/>
+    </action>
+     
+    <!-- From Validator Ex: Registration Action -->
+    <action path="/registration" forward="/registration.jsp" />
+    <action path="/registration-submit" type="org.apache.struts.webapp.validator.RegistrationAction" name="registrationForm" scope="request" validate="true" input="input">
+      <forward name="input" path="/registration.do" />
+      <forward name="success" path="file.jsp" />
+    </action>
+    <action path="/jsRegistration" forward="/jsRegistration.jsp" />     
+     
+    <!-- Teacher actions =============================================================================-->
+    
+    <!-- A list of students in the class. -->
+    <action    path="/class_home"
+               type="com.businessglue.struts.teacher.ClassHomeAction"
+           scope="request">
+           <forward name="class_home" path="/jsps/teacher/class_home.jsp"/>
+    </action>
+    
+    <!-- A list of saved tests for EVERY class. SavedTestsListActio is the remote package version.-->
+    <action    path="/saved_tests_for_classes"
+               type="com.businessglue.struts.teacher.SavedTestsForClassesAction"
+           scope="request">
+           <forward name="saved_tests_for_classes" path="/jsps/teacher/saved_tests_for_classes.jsp"/>
+    </action>
+    
+    <!-- After clicking on a test in the list above, this action creates a list of students who are registered for this test. -->
+    <action    path="/saved_class_tests"
+               type="com.businessglue.struts.teacher.SavedClassTestsAction"
+           scope="request">
+           <forward name="saved_tests_for_classes" path="/jsps/teacher/saved_class_tests.jsp"/>
+    </action>
+    
+    <!-- Delete the entire test -->
+    <action    path="/delete_saved_class_test"
+               type="com.businessglue.struts.teacher.DeleteClassTestsAction"
+           scope="request">
+           <forward name="saved_tests_for_classes" path="/jsps/teacher/saved_tests_for_classes.jsp"/>
+    </action>
+     
+    <action    path="/class_details"
+               type="com.businessglue.struts.teacher.ClassDetailsAction"
+           scope="request">
+            <forward name="class_details" path="/jsps/teacher/class_details.jsp"/>
+    </action>
+    
+        <action    path="/class_weekly_reports"
+               type="com.businessglue.struts.teacher.ClassWeeklyReportAction"
+           scope="request">
+            <forward name="class_details" path="/jsps/teacher/class_weekly_reports.jsp"/>
+    </action>
+     
+    <action    path="/student_details"
+               type="com.businessglue.struts.teacher.StudentDetailsAction"
+           scope="request">
+            <forward name="student_details" path="/jsps/teacher/student_details.jsp"/>
+    </action>
+    
+    <action    path="/add_class"
+               type="com.businessglue.struts.teacher.AddClassAction"
+           name="addCategoryForm"
+           scope="request"
+           input="/add_class.jsp">
+    <forward name="class_home" path="/jsps/teacher/class_home.jsp"/>
+    </action>
+    
+    <action    path="/create_students"
+               type="com.businessglue.struts.teacher.CreateStudentsAction"
+           name="importListForm"
+           scope="request"
+           input="/icreate_students.jsp">
+    <forward name="create_students_result" path="/jsps/teacher/create_students_result.jsp"/>
+    </action>
+    
+    <action    path="/teacher_import_words"
+               type="com.businessglue.struts.teacher.TeacherImportWordsAction"
+           scope="request"
+           name="importListForm">
+    <forward name="class_home" path="/jsps/teacher/teacher_import_words_result.jsp"/>
+    </action>
+    
+    <action    path="/add_word_list"
+               type="com.businessglue.struts.teacher.AddWordListAction"
+           name="addCategoryForm"
+           scope="request"
+           input="/add_class.jsp">
+    <forward name="teacher_import_words" path="/jsps/teacher/teacher_import_words.jsp"/>
+    </action>
+    
+    <!-- create a name with number of words and type then forward to a list of the students individual test -->
+    <action    path="/create_test"
+               type="com.businessglue.struts.teacher.CreateTestAction"
+               name="createIntegratedTestForm"
+           scope="request">
+      <forward name="create_tests_result" path="/jsps/teacher/create_tests_result.jsp"/>
+    </action>
+    
+    <action    path="/choose_students_to_add_to_class"
+               type="com.businessglue.struts.teacher.ChooseStudentsToAddToClassAction"
+           scope="request">
+    <forward name="choose_students_to_add_to_class" path="/jsps/teacher/choose_students_to_add_to_class.jsp"/>
+    </action>
+    
+    <action    path="/add_students_to_class"
+               type="com.businessglue.struts.teacher.AddStudentsToClassAction"
+           scope="request">
+    <forward name="class_home" path="/jsps/teacher/class_home.jsp"/>
+    </action>
+    
+     
+  </action-mappings>
+   
+  <!--message-resources parameter="ApplicationResources"/-->
+   
+    <message-resources
+        parameter="ApplicationResources"/>
+        
+    <message-resources
+        parameter="ApplicationResources_ko_KR"/>
+   
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+    <set-property property="pathnames"
+                     value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+   
+</struts-config> 

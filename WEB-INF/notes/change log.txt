@@ -1,0 +1,133 @@
+
+Indoct 1.2  'Sussex'
+
+fixed - stats history was dying from a zero byte file.  Used a try/catch block but still don'
+t know why a blank weekly status file got saved.
+To Do:
+=====
+* feature: sort words by ease of learning, so that easy/mdeium/hard words can use different elts (Exclude Level Times)
+* feature: visual word test history
+* feature: tetris testing
+* feature: shared dictionary to look up equivalents, and check for missed answers
+* file for tested word ids in a session to prevent a different type of test of the same word in a session.  we need the list because even if the words have a reading date one day before the writing test date, that date can go by, and then they will both be on the list during the same session.
+* delete users from class
+* new user experience (or one that works without errors/ and this includes an error page)
+* allow teacher to import an existing student into a class
+* after delete, user is refered to blank page.  they should see a notice "word is deleted"
+* feature: to retire words witrh x number of passed tests at level 3. (like three level three writing tests will automatically retire word)
+* word aquisition
+* web word lookup fix
+* problem: testReverseTestRecord() is failing
+* new user utorial and explanations
+* graphic design overhaul
+* feature:bug tracking for users
+* new user experience
+* user weekly report page based on the the teachers page.
+* exclude words (hardwire those in, and have a flag for check/don't check)
+* apply a different elt vector on a word by word basis, or possibly a type by type basis.  This might require a mathmatical formula, using calculus, which  could actually be called the learning formula, or some such catchy phrase to impress people who have no idea what a 'intermittent engine' is.
+* feature: categories
+* split words into individual files
+* add listening & speaking level tags.
+* add listening & speaking subject
+* separate test types?
+* implement word status.
+*BUG:wntd list files coming up with a date of 1970.  This happens during a change update action.
+
+the analytical study:
+
+1. introduce students to the system.  Ie, terms like text, definition, reading, writing, etc.
+2. initial survey questions and initial writing test on all words.  (test may not be necessary if we can assume that a student doesn't know any of the words.  Also, we will introduce words at a certain rate.
+3. setup vocab schedule based on how often a student studies & how fast they need to progress.
+4. start with reading tests.  test all words then print out a weekly word list and show how to use it.
+5. introduce writing tests.  Test all words and print out weekly list for writing practice (along with reading words).
+6. introduce integrated testing & print out new weekly study list.
+7. introduce listening testing.  How do we review listening?
+8. introduce speaking testing.  Same for this one.
+9. introduce full integrated testing.
+10. final test after level 3 period repeats of 3 times, which would be 100 days.  Then administer a test of all words.s
+
+Indoct 1.1  'Jenners'
+
+done 1 * create a class (Feb 21)update
+done 2 * create new students from a list of names
+done 3 * import a list of words into each student in the class (2011-03-06)
+done 4 * prepare saved tests for each student (2011-04-03)
+done 4.5 save a ref to the class with student_ids/test_ids list, 
+done 4.6 add a view action/page like the result page that gets the test status from each students saved test file.
+done 5 * view a list of all the pending saved tests (so that the teacher can print out each one)
+done 6 * score the tests on the list. (Jun.6)
+done 7 * backup the farm
+done 8 * show percentile score of tests
+done 9 * put percentile score as a class tests status page, or just add to the table of class home to show results.
+prob 10* The link from the saved test page back to class home doesn;t work because we haven';t visited the class home yet.
+done 11* start a new work log
+done 12* move from indoct & catechis 1.0 to 1.1. (June 19th)
+
+
+Indoct 1.0  "Cambridgeshire"
+
+To Do
+
+- percentage not working
+- change test not reversing tests in the word files
+- get locales and encodings from the users options file
+- allow the range of words tested to be used, and make changes in the word grading function
+- allow user to change password
+- session status, such as # of tests, # of missed words, passed, etc../
+
+Action workflow descreoptions
+
+<p>This is the login page for the Englishglue vocabulary learning web application
+<p>Currently, this is just a basic front end for the intermittent re-inforecment engine which tracks the vocab a student is learning on a word by word basis, and further distinguishes between reading and writing.
+<p>Each word has a reading or writing level from 0 to 3.  Each level represents a different time the word will be tested at.  For example, if the student passes a test for a word at reading level 0, the word will go up to reading level 1, and then the next test will be about a week later.  If a week later the student passes that test, the word will go up to reading level 2, and the next test for that word will be scheduled for about a month later.
+<p>As this application is specifically focused on each students singular needs, it is hard to offer an effective demonstration of it in action.
+<p>However, if you want to log in and see a sample students site, please use the following long information:
+<p>name: guest
+<p>password: pass
+<p>This application is currently being re-factored to support a large number of students, so some of the functions in this old version might take a while to operate, but please be patient.
+<p>There is not explanation for each funtion as currently students are guided individually with a teacher who operates the application.
+
+<p>From the tests.jsp page, the user chooses create integrated test
+This leads to the create_integrated_test_name.jsp which is a form  for entering the test name, number of words, etc. using the createIntegratedTestForm.
+This then leads to com.businessglue.struts.testing.CreateIntegratedTestAction"
+This forwards to /jsps/testing/create_integrated_test.jsp or /jsps/teacher/teacher_create_integrated_test.jsp if it is a teacher creating test for an entire class.  The teachers workflow mirrors the students, but the jsps are preferenced with 'teacher', but use the same actions.
+
+    
+    <action    path="/create_integrated_test_save"
+               type="com.businessglue.struts.testing.CreateIntegratedTestSaveAction"
+           scope="request">
+      <forward name="created_integrated_tests" path="/jsps/testing/created_integrated_tests.jsp"/>
+      <forward name="teacher_created_integrated_tests" path="/jsps/teacher/teacher_created_integrated_tests.jsp"/>
+    </action>
+    
+    <action    path="/created_integrated_tests"
+               type="com.businessglue.struts.testing.CreatedIntegratedTestAction"
+           scope="request">
+      <forward name="created_integrated_tests" path="/jsps/testing/created_integrated_tests.jsp"/>
+      <forward name="teacher_created_integrated_tests" path="/jsps/teacher/teacher_created_integrated_tests.jsp"/>
+    </action>
+    
+    <action    path="/created_integrated_test_display"
+               type="com.businessglue.struts.testing.CreatedIntegratedTestDisplayAction"
+           scope="request">
+      <forward name="created_integrated_test_display" path="/jsps/testing/created_integrated_test_display.jsp"/>
+    </action>
+    
+    <action    path="/created_integrated_test_score"
+               type="com.businessglue.struts.testing.CreatedIntegratedTestScoreAction"
+           scope="request">
+      <forward name="created_integrated_test_score" path="/jsps/testing/created_integrated_test_score.jsp"/>
+    </action>
+    
+    <action    path="/created_integrated_test_result"
+               type="com.businessglue.struts.testing.CreatedIntegratedTestResultAction"
+           scope="request">
+      <forward name="created_integrated_test_result" path="/jsps/testing/created_integrated_test_result.jsp"/>
+    </action>
+    
+    <action    path="/created_integrated_test_result_score"
+               type="com.businessglue.struts.testing.CreatedIntegratedTestResultScoreAction"
+           scope="request">
+      <forward name="created_integrated_test_result_score" path="/jsps/testing/created_integrated_test_result_score.jsp"/>
+    </action>
+    

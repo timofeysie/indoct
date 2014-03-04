@@ -1,0 +1,32 @@
+
+#users_options
+ users_name=User
+ native_languge=Native Lang
+ language_being_learned=Studied Lang
+ encoding=Encoding
+ locale=Locale
+ grade_whitespace=Whitespace
+ max_level=Max Levels
+ exclude_chars=Exclude Chars
+ exclude_level0_test=0
+ exclude_level1_test=1
+ exclude_level2_test=2
+ exclude_level3_test=3
+ daily_words_limit=Daily Tests
+ record_passed_tests=Record Pass
+ record_failed_tests=Record Fail
+ record_limit=Record Limit
+ record_exclude_level=Exclude Level
+ 
+ In The Weekly list of words, setting this to true will make sure there are no duplicates.
+ weekly_list_remove_repeats=No Repeats
+
+To Do
+
+Test/List options
+Should a word at a level of greater than 0 be decrmented only one, or back to level 0?
+(For instance, if a well known word at level 3 is missed in a test, then 
+
+Should a grammar test only inlcude vocabulary from know words.
+
+Know Word level can be set to dtermine at what point a

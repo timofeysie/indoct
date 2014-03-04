@@ -1,0 +1,21 @@
+To Do
+
+- percentage not working
+- change test not reversing tests in the word files
+- get locales and encodings from the users options file
+- allow the range of words tested to be used, and make changes in the word grading function
+- allow user to change password
+- session status, such as # of tests, # of missed words, passed, etc../
+
+describe this app!
+
+<p>This is the login page for the Englishglue vocabulary learning web application
+<p>Currently, this is just a basic front end for the intermittent re-inforecment engine which tracks the vocab a student is learning on a word by word basis, and further distinguishes between reading and writing.
+<p>Each word has a reading or writing level from 0 to 3.  Each level represents a different time the word will be tested at.  For example, if the student passes a test for a word at reading level 0, the word will go up to reading level 1, and then the next test will be about a week later.  If a week later the student passes that test, the word will go up to reading level 2, and the next test for that word will be scheduled for about a month later.
+<p>As this application is specifically focused on each students singular needs, it is hard to offer an effective demonstration of it in action.
+<p>However, if you want to log in and see a sample students site, please use the following long information:
+<p>name: guest
+<p>password: pass
+<p>This application is currently being re-factored to support a large number of students, so some of the functions in this old version might take a while to operate, but please be patient.
+<p>There is not explanation for each funtion as currently students are guided individually with a teacher who operates the application.
+

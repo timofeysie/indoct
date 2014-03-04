@@ -1,0 +1,60 @@
+Commands
+=------=
+
+check out the CVSROOT module:
+cvs checkout CVSROOT
+cd CVSROOT
+ls
+cvs edit config 
+cvs commit config 
+cvs unedit config 
+
+cd wdir
+cvs import -m "Imported sources" yoyodyne/rdir yoyo start
+cd ..
+cvs checkout yoyodyne/rdir
+diff -r wdir yoyodyne/rdir
+rm -r wdir
+
+Source
+=----=
+CVSNT Starting project docs:
+If the files you want to install in cvsnt reside in wdir, and you want them to appear in the repository as $CVSROOT/yoyodyne/rdir, you can do this: 
+
+$ cd wdir
+$ cvs import -m "Imported sources" yoyodyne/rdir yoyo start
+
+
+Unless you supply a log message with the -m flag, cvsnt starts an editor and prompts for a message. The string yoyo is a vendor tag, and start is a release tag. They may fill no purpose in this context, but since cvsnt requires them they must be present. Chapter 14, Tracking third-party sources , for more information about them. 
+
+You can now verify that it worked, and remove your original source directory. 
+
+$ cd ..
+$ cvs checkout yoyodyne/rdir       # Explanation below
+$ diff -r wdir yoyodyne/rdir
+$ rm -r wdir
+
+
+
+
+http://www.linux.ie/articles/tutorials/cvs.php
+
+check out the CVSROOT module:
+~ root@sprocket $ cvs checkout CVSROOT
+~ root@sprocket $ cd CVSROOT
+~/CVSROOT root@sprocket $ ls
+CVS commitinfo cvswrappers loginfo notify taginfo checkoutlist config editinfo modules rcsinfo verifymsg ~/CVSROOT root@sprocket $
+
+mark ourselves as being an editor of this file: 
+~/CVSROOT root@sprocket $ cvs edit config 
+And then we edit the file. The only configuration directive you might want to change now is 'PreservePermissions', which determines wether file permissions are preserved in the repository. You might want to turn this off if you're going to have any WIN32 clients connecting to the CVS server. :) 
+Once we finish editing the file, we save it, and commit our changes to the file: 
+~/CVSROOT root@sprocket $ cvs commit config 
+We get presented with an editor (as per our $EDITOR environment variable), where we can enter a log message. This message describes what you did to the file, why, what bug number it resolves, etc. Enter a short log message. 
+
+'config' is now at version 1.2, and your CVS server is basically configured for simple use locally. 
+Mark yourself as no longer editing the 'config' file. 
+~/CVSROOT root@sprocket $ cvs unedit config 
+
+
+

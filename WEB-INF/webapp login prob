@@ -1,0 +1,68 @@
+A Servlet Exception Has Occurred
+org.apache.jasper.JasperException: Unable to compile class for JSP
+An error occurred at line: 18 in the jsp file: /login.jsp
+Generated servlet error:
+/usr/ngasi/contexts/quaquaverse/private/tomcat/work/t4/login$jsp.java:226: Method pushBody() not found in class javax.servlet.jsp.PageContext.
+                              out = pageContext.pushBody();
+                                                        ^
+An error occurred at line: 18 in the jsp file: /login.jsp
+Generated servlet error:
+/usr/ngasi/contexts/quaquaverse/private/tomcat/work/t4/login$jsp.java:236: Method popBody() not found in class javax.servlet.jsp.PageContext.
+                              out = pageContext.popBody();
+                                                       ^
+An error occurred at line: 26 in the jsp file: /login.jsp
+Generated servlet error:
+/usr/ngasi/contexts/quaquaverse/private/tomcat/work/t4/login$jsp.java:286: Method pushBody() not found in class javax.servlet.jsp.PageContext.
+                              out = pageContext.pushBody();
+                                                        ^
+An error occurred at line: 26 in the jsp file: /login.jsp
+Generated servlet error:
+/usr/ngasi/contexts/quaquaverse/private/tomcat/work/t4/login$jsp.java:296: Method popBody() not found in class javax.servlet.jsp.PageContext.
+                              out = pageContext.popBody();
+                                                       ^
+An error occurred at line: 31 in the jsp file: /login.jsp
+Generated servlet error:
+/usr/ngasi/contexts/quaquaverse/private/tomcat/work/t4/login$jsp.java:319: Method pushBody() not found in class javax.servlet.jsp.PageContext.
+                              out = pageContext.pushBody();
+                                                        ^
+An error occurred at line: 31 in the jsp file: /login.jsp
+Generated servlet error:
+/usr/ngasi/contexts/quaquaverse/private/tomcat/work/t4/login$jsp.java:329: Method popBody() not found in class javax.servlet.jsp.PageContext.
+                              out = pageContext.popBody();
+                                                       ^
+    if (pageContext != null) pageContext.handlePageException(t);
+                                                             ^
+7 errors
+at org.apache.jasper.compiler.Compiler.compile(Unknown Source)
+at org.apache.jasper.servlet.JspServlet.loadJSP(JspServlet.java:469)
+at org.apache.jasper.servlet.JspServlet$JspServletWrapper.loadIfNecessary(JspServlet.java:171)
+at org.apache.jasper.servlet.JspServlet$JspServletWrapper.service(JspServlet.java:183)
+at org.apache.jasper.servlet.JspServlet.serviceJspFile(JspServlet.java:305)
+at org.apache.jasper.servlet.JspServlet.service(JspServlet.java:397)
+at javax.servlet.http.HttpServlet.service(HttpServlet.java:856)
+at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:222)
+at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:168)
+at org.apache.catalina.core.StandardWrapperValve.invoke(Unknown Source)
+at org.apache.catalina.core.StandardPipeline.invokeNext(StandardPipeline.java:566)
+at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:472)
+at org.apache.catalina.core.ContainerBase.invoke(Unknown Source)
+at org.apache.catalina.core.StandardContextValve.invoke(Unknown Source)
+at org.apache.catalina.core.StandardPipeline.invokeNext(StandardPipeline.java:566)
+at org.apache.catalina.valves.CertificatesValve.invoke(Unknown Source)
+at org.apache.catalina.core.StandardPipeline.invokeNext(StandardPipeline.java:564)
+at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:472)
+at org.apache.catalina.core.ContainerBase.invoke(Unknown Source)
+at org.apache.catalina.core.StandardContext.invoke(StandardContext.java:2405)
+at org.apache.catalina.core.StandardHostValve.invoke(Unknown Source)
+at org.apache.catalina.core.StandardPipeline.invokeNext(StandardPipeline.java:566)
+at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:472)
+at org.apache.catalina.core.ContainerBase.invoke(Unknown Source)
+at org.apache.catalina.core.StandardEngineValve.invoke(Unknown Source)
+at org.apache.catalina.core.StandardPipeline.invokeNext(StandardPipeline.java:566)
+at org.apache.catalina.core.StandardPipeline.invoke(StandardPipeline.java:472)
+at org.apache.catalina.core.ContainerBase.invoke(Unknown Source)
+at ngasi.connector.tomcat4.TomcatConnectionHandler.handleConnection(Unknown Source)
+at ezj.b.e.run(Unknown Source)
+
+Hey,  I got some pageContext.pushBody()/popBody() method not found errors in a jsp when I uploaded my app to my web host.  I use tomcat 5.0 on my box, but the server uses 4.1.12.  Strangely the error line numbers don't relate to any code in the gerated servlet
+pageContext.pushBody(), pageContext.popBody();

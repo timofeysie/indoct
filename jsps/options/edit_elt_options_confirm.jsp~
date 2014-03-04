@@ -1,0 +1,27 @@
+<%@ page contentType="text/html;charset=UTF-8" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+
+<html:html>
+<head>
+<title><bean:message key="registrationForm.title"/></title>
+<html:base/>
+</head>
+<body bgcolor="white">
+<p><bean:message key="options.edit_exclude_level_confirm"/>
+
+<%
+Vector elt_ector =  (Vector)session.getAttribute("elt_vector");
+%>
+
+<p><bean:message key="options.exclude_level"/>&nbsp;0<% elt_ector.get(0); %>
+<p><bean:message key="options.exclude_level"/>&nbsp;1<% elt_ector.get(0); %>
+<p><bean:message key="options.exclude_level"/>&nbsp;2<% elt_ector.get(0); %>
+<p><bean:message key="options.exclude_level"/>&nbsp;3<% elt_ector.get(0); %>
+
+<a href="/indoct/edit_elt_options.jsp"><bean:message key="options.re-edit"/>
+<a href="/indoct/edit_elt_options_confirm.do"><bean:message key="options.edit_exclude_level_confirm_and_change"/>
+
+</body>
+</html:html>

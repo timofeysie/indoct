@@ -1,0 +1,167 @@
+
+clean:
+   [delete] Deleting directory F:\projects\indoct\WEB-INF\classes
+    [mkdir] Created dir: F:\projects\indoct\WEB-INF\classes
+
+prepare:
+
+resources:
+     [copy] Copying 3 files to F:\projects\indoct\WEB-INF\classes
+
+compile:
+    [javac] Compiling 21 source files to F:\projects\indoct\WEB-INF\classes
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\struts\TestResultAction.java:164: cannot resolve symbol
+    [javac] symbol  : variable jdom 
+    [javac] location: class com.businessglue.struts.TestResultAction
+    [javac] 		Vector grades = jdom.getWhateverVector("score", "date", "grade");
+    [javac]                                 ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\struts\TestResultAction.java:166: writeDocument(java.lang.String) in com.businessglue.util.CreateJDOMList cannot be applied to ()
+    [javac] 		levels_jdom.writeDocument();
+    [javac]                            ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\CreateJDOMList.java:351: incompatible types
+    [javac] found   : org.jdom.Element
+    [javac] required: boolean
+    [javac] 		if (word.getChild(name))
+    [javac]                                  ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\CreateJDOMList.java:353: incompatible types
+    [javac] found   : org.jdom.Element
+    [javac] required: java.lang.String
+    [javac] 			new_value = word.getChild(name);
+    [javac]                                                  ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\CreateJDOMList.java:357: cannot resolve symbol
+    [javac] symbol  : class ELement 
+    [javac] location: class com.businessglue.util.CreateJDOMList
+    [javac] 			Element new_child = new ELement(name);
+    [javac]                                                 ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\CreateJDOMList.java:362: cannot resolve symbol
+    [javac] symbol  : variable existing_string 
+    [javac] location: class com.businessglue.util.CreateJDOMList
+    [javac] 		return existing_string;
+    [javac]                        ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:131: cannot resolve symbol
+    [javac] symbol  : class Enumeration 
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 		Enumeration keys = levels.keys(); 
+    [javac]                 ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:135: cannot resolve symbol
+    [javac] symbol  : variable test_file 
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 			String value = (String)test_file.get(key);
+    [javac]                                                ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:163: cannot resolve symbol
+    [javac] symbol  : variable word_list 
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 		Iterator words = word_list.iterator();
+    [javac]                                  ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:167: cannot resolve symbol
+    [javac] symbol  : variable jdom 
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 			String current_level = jdom.ifXDontExistCreateIt(word, "level", "0");
+    [javac]                                                ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:177: cannot resolve symbol
+    [javac] symbol  : method setContent (java.lang.String)
+    [javac] location: class org.jdom.Element
+    [javac] 			level.setContent(new_level);
+    [javac]                              ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:178: cannot resolve symbol
+    [javac] symbol  : method getChildContent (java.lang.String)
+    [javac] location: class org.jdom.Element
+    [javac] 			String word_text = word.getChildContent("text");
+    [javac]                                                ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:191: cannot resolve symbol
+    [javac] symbol  : class DateFormat 
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 		DateFormat df = DateFormat.getDateInstance();
+    [javac]                 ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:191: cannot resolve symbol
+    [javac] symbol  : variable DateFormat 
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 		DateFormat df = DateFormat.getDateInstance();
+    [javac]                                 ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:192: cannot resolve symbol
+    [javac] symbol  : class Date 
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 		Date recent_date = null;
+    [javac]                 ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:199: incompatible types
+    [javac] found   : org.jdom.Element
+    [javac] required: java.lang.String
+    [javac] 				String date_from_test = test.getChild("date");
+    [javac]                                                                      ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:200: cannot resolve symbol
+    [javac] symbol  : variable test_date 
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 				test_date = df.parse(date_from_test);
+    [javac]                                 ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:202: cannot resolve symbol
+    [javac] symbol  : variable test_date 
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 				{recent_date=test_date;}
+    [javac]                                              ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:203: cannot resolve symbol
+    [javac] symbol  : variable test_date 
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 				int result = recent_date.compareTo(test_date);
+    [javac]                                                                    ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:206: cannot resolve symbol
+    [javac] symbol  : variable test_date 
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 					recent_date = test_date;
+    [javac]                                                       ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:207: incompatible types
+    [javac] found   : org.jdom.Element
+    [javac] required: java.lang.String
+    [javac] 					most_recent_result = test.getChild("grade");
+    [javac]                                                                           ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:216: cannot resolve symbol
+    [javac] symbol  : method new_string ()
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 		String new_level = new_string();
+    [javac]                                    ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:220: current_level is already defined in incrementWordLevel(java.lang.String)
+    [javac] 		int current_level = Integer.valueOf(number).getValue();
+    [javac]                     ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:220: cannot resolve symbol
+    [javac] symbol  : method getValue ()
+    [javac] location: class java.lang.Integer
+    [javac] 		int current_level = Integer.valueOf(number).getValue();
+    [javac]                                                    ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:221: incompatible types
+    [javac] found   : int
+    [javac] required: java.lang.String
+    [javac] 		new_level = current_level++;
+    [javac]                                          ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:228: cannot resolve symbol
+    [javac] symbol  : method new_string ()
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 		String new_level = new_string();
+    [javac]                                    ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:232: current_level is already defined in decrementWordLevel(java.lang.String)
+    [javac] 		int current_level = Integer.valueOf(number).getValue();
+    [javac]                     ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:232: cannot resolve symbol
+    [javac] symbol  : method getValue ()
+    [javac] location: class java.lang.Integer
+    [javac] 		int current_level = Integer.valueOf(number).getValue();
+    [javac]                                                    ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:233: incompatible types
+    [javac] found   : int
+    [javac] required: java.lang.String
+    [javac] 		new_level = current_level--;
+    [javac]                                          ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:234: operator < cannot be applied to java.lang.String,int
+    [javac] 		if (new_level<0)
+    [javac]                              ^
+    [javac] F:\projects\indoct\WEB-INF\src\com\businessglue\util\Domartin.java:236: cannot resolve symbol
+    [javac] symbol  : variable return_level 
+    [javac] location: class com.businessglue.util.Domartin
+    [javac] 			return_level = new String("level-0");
+    [javac]                         ^
+    [javac] Note: F:\projects\indoct\WEB-INF\src\com\businessglue\util\CreateJDOMList.java uses or overrides a deprecated API.
+    [javac] Note: Recompile with -deprecation for details.
+    [javac] 31 errors
+
+BUILD FAILED
+F:\projects\indoct\WEB-INF\src\build.xml:53: Compile failed; see the compiler error output for details.
+
+Total time: 7 seconds

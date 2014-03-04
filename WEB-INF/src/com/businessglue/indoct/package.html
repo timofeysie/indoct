@@ -1,0 +1,288 @@
+<head>
+</head>
+<body>
+<h2><b>Notes</b></h2>
+<p>
+ApplicationResourcePropeties are in the /WEB-INF/classes/ folder.
+</p>
+<p>
+The changelog is in the catechis package folder.
+</p>
+<p><h2><b>To do</b></h2></p>
+<ul>
+
+<li><h1><b>Features</b></h1>
+<li>Only lookup web words the first time the user gets a test result.
+<li>Put lookup results in a separator frame.  Also lookup incorrect text to check for alternate meaning,
+ in which case, negate test, and put off for a period of time.
+<li>Create a remove missed words link on test results page (and missed words page?)
+ Maybe we want to only provide the text and if a student guesses the right answer (maybe shown in a mouseover)
+  then they can choose to remove it, instead of just showing both text and def.
+  Or let the user set an option to hide definitions.
+<li>a non-trivial dictionary containing all the many to many word relationships
+<li>All user to /edit/delete words/tests
+
+<li><h1><b>Errors</b></h1>
+<li>2006-08-07 14:45:26 StandardContext[/indoct]StatsWordAction.sortDates: could not parse Tue Mar 28 01:03:01 KST 2006
+<li>Change test doesn't check max level
+<li>Total tests stats not accurate
+<li>Statistics for individual words cases illegal argument error from the date
+<li>Replace word when changing a test results garbles the text-def
+<li>Title not working on test results page
+<li>run test page not filtering files (because of which levels?)
+
+<li><h2><b>High</b></h2>
+<li>Start using hibernate.
+<li>make refresh tests impossible.
+<li>make stats use max word level from user options.
+
+<li>Test Form Refactor
+<li>Test Page form (let users choose test file index, or tested file index,
+ display number of words per level for each file)
+<li>Filter File Form Refactor
+<li>File page style options (spaces on file page, recently failed words, reading,
+ writing filter or both, filter multiple files) add all filter options for filter page.
+
+<li><h1><b>Medium</b></h1>
+<li>Exclude filter only needs to check for level 0
+<li>Put index in word files, not test files.
+<li>User Functions: New User page, new folder, options, etc; Edit user options
+
+
+<li><h1><b>Low</b></h1>
+<li>Cycle test (ie: keep testing failed words until all are passed)
+<li>On file.jsp, the filter form uses hard coded types for reading and writing.
+ These valuse should be sent thru a translation utility, which does the reverse
+ in the filter_file.jsp to retrieve the values.
+<li>Session expired error message
+<li><h1><b>Start using hibernate.</b></h1>
+
+<li><h1><b>Exceptions</b></h1>
+<li>If apostrophies  are encoded as as a different character.
+<li>If inappropriate file is chosen for test, etc...
+<li>If not range is chosen on the view file page. (should re-direct back to page)
+<li>If the locale and encoding are not set in the I18Nutility class.
+<li>Trying to filter a new word list with no levels:
+	java.lang.NullPointerException
+	com.businessglue.util.Domartin.getFileExtension(Unknown Source)
+
+<li><h1><b>Would be nice</b></h1>
+<li>Fix java doc statements so they don't give ant a problem
+<li>Solve CVS-Ant build problem
+<li>Use xml database for storage
+<li>Use Hibernate/MySql stack for storage
+<li>Forgiving filter so that test answers can make one mistake and still pass,
+ or two, or three depending upon an threshhold option.
+
+<li><h1><b>Problems</b></h1>
+<li>Can't run level 1 writing test on october.xml
+<li>Why did this fail(september.xml)? wide 	?? 	??? 	0.  Word entered correctly, but on the result page the entered text was garbled.  It was on a level 1 test, so the word must have been passed before to get to level 1.
+<li>Why did this fail(october.xml)?  ?????????? 	Don�t have to bring 	don't have to bring 	0
+<li>Why does october.xml work in the file.jsp, but not filter?
+<li>Why is November.xml garbled in the file.jsp but not garbled after filter?
+
+<li><h1><b>Refactoring Project Ideas</b></h1>
+<li>Move Storage into the interface package, FileStorage in the the file package,
+and WordFilter into the filter package.  As time went on, sub folders were added
+to the catechis package to organize the classes.  Not really that important,
+but what's in a name?
+
+<li><h1><b>Fixed / Completed (date: from where?)</b></h1>
+<li>Created Domartin static utilities 				(Sep 11, 2004)
+<li>Avoid get header workaround 				(Nov 7th 2004:low)
+<li>fixed reading functions and levels				(Dec 12th 2004: Error)
+<li>TestAction sets the encoding by hand! 			(Dec ??? 2004: Medium)
+<li>external user/password file 				(Dec 16th, 2004:Hi)
+<li>create catechis and (excogit=not used yet) packages 	(Dec 26th 2004)
+<li>fixed percentage not working 				(Dec 27th 2004: Error)
+<li>Put file name on test results page 				(Dec 27th 2004: Medium)
+<li>Test everything [done for Catechis only]. 			(Aug 2005: Would be nice)
+<li>Created stats chart for word, traking each test in a table. (Aug 30 2005 :high)
+<li>Created replace word, change test results 			(Dec 2005: features)
+<li>Fixed change test result so word lvls are changed and saved (Jan 8th 2006)
+<li>run test page not filtering files 				(Jan 10th 2006: errors)
+<li>Limit word passing level set in user options. 		(Feb 18 2006: high)
+<li>Added Rate of Forgetting utilities for Catechis		(Apr 15th, 2006)
+<li>Fixed average rate of forgetting for file/categories	(Apr 15th, 2006)
+<li>fixed change test not working for levels 1-3 (only 0)	(Apr 25 2006: errors)
+<li>Add word to file/category					(Apr 30 2006: Features)
+<li>Added links to return to test page and main page		(Oct 2006: Features)
+<li>Setup web forwarding for businessglue.com			(Oct 2006: Features)
+<li>Exclude patterns for tests (recently tests words)		(Jun 2007: Features)
+<li>Create test all words one at a time with threadsafe actions.(Jun 2007: features)
+<li>Create a missed words/filtered list file.			(Oct 2007: features)
+<li>Created recalculate statistic link on welcome page		10/23/07	1 hr	est 1 day</li>
+<li>Created an admin package for views of user information	10/24/07	3 days  ongoing.</li>
+<li>Created WordListFilter to remove repeats from weekly list.	10/26/07	2 days</li>
+<li>Implement manager role with tools funtionality.		11/08/07	3 days	est 2 days</li>
+<li>Created WeeklyListFormatAction to provide page breaks	04/15/08	3 days. actually, more needed...</li>
+<li>Added options for table formatting used in the format jsp   05/20/08	months...we was lazy</li>
+<li>fixed ChangeUpdateAction so edited words have proper info   06/30/08	1 hour...still lazy</li>
+</ul>
+
+
+<p>
+<p>$Author: timothy $
+<p>$Date: 2004/11/27 18:54:36 $
+<p>$Header: f:\\projects/businessglue/indoct/WEB-INF/src/com/businessglue
+	/indoct/package.html,v 1.2 2004/11/27 18:54:36 timothy Exp $
+<p>$Id: package.html,v 1.2 2004/11/27 18:54:36 timothy Exp $     
+<p>$Log: package.html,v $
+<p>Revision 1.2  2004/11/27 18:54:36  timothy
+<p>Added tags to Indcot package file
+<p>
+<p>$Locker:  $  
+<p>$Name:  $
+<p>$RCSfile: package.html,v $
+<p>$Revision: 1.2 $
+<p>$Source: f:\\projects/businessglue/indoct/WEB-INF/src/com/businessglue
+	/indoct/package.html,v $
+<p>$State: Exp $
+<p></p>
+<ul>
+<li>Weird Behavior
+<li>Some words (vacation, to confess (Dec) show up even when they are over the
+ filter level. 'vacation' went to level 4 on a basic writing test!?
+<li>After running writing tests, backing up and trying to view any file goes into
+ the dreaded infinate loop that fills up the log.
+<li>Run writing test, then back up and run a reading test:
+<p>java.lang.IndexOutOfBoundsException: Index: 32 Size: 32
+org.jdom.ContentList.get(ContentList.java:323)
+org.jdom.ContentList$FilterList.get(ContentList.java:528)
+com.businessglue.util.CreateJDOMList.getFilteredTextDefHash(Unknown Source)
+<li>After running two tests (writing, reading), then left all night and tried to
+ run a new test. (Worked again after loggin in)
+ <p>java.lang.NullPointerException
+org.apache.catalina.util.CharsetMapper.getCharset(CharsetMapper.java:121)
+org.apache.coyote.tomcat5.CoyoteResponse.setLocale(CoyoteResponse.java:756)
+org.apache.coyote.tomcat5.CoyoteResponseFacade.setLocale(CoyoteResponseFacade.java:276)
+com.businessglue.util.I18NWebUtility.setContentTypeAndLocale(Unknown Source)
+com.businessglue.struts.FileAction.perform(Unknown Source)
+</ul>
+
+<p>Adding Functions</p>
+<p>To create a feature which keeps track of new words that have not been tested,
+ I took these steps:
+<p>Created the interface WordLists</p>
+<p>Created an implemetation FileJDOMWordLists</p>
+<p>Created the methods to add words to the files</p>
+<p>Created the folder for the new files</p>
+<p>Created a test FileJDOMWordListTest</p>
+<p>Once the tests pass...</p>
+<p>Add features to create the folder and files for a new user in FileUserUtilities</p>
+<p>Also made a method in JDOMFiles to create a generic xml stub file with the root object named after the arg passed in.
+<p>Add options in the <user_name folder>/<user_name>.options file to turn the feature on
+<p>Modify AddNewWordAction to add words to a list.
+<p>Modify the WeeklyWordListsAction to use this new feature</p>
+<p>Add the feature to the weekly_word_list and weekly_word_list jsps.</p>
+
+<p>The path to create and score an integrated (reading & writing) test:
+<p>welcome.jsp -> tests.do -> TestsAction -> tests.jsp
+created_tests.do -> CreatedTestsAction -> created_integrated_tests.jsp
+create_integrated_test_name.jsp (form) -> create_integrated_test.do -> CreateIntegratedTestAction
+-> created_integrated_tests.jsp -> created_integrated_test_score.do -> CreatedIntegratedTestScoreAction
+-. /jsps/testing/created_integrated_test_display.jsp
+
+<p>The path to create and score an integrated (reading & writing) test:
+welcome.jsp -> tests.do -> TestsAction -> tests.jsp
+created_tests.do -> CreatedTestsAction -> created_integrated_tests.jsp
+create_integrated_test_name.jsp (form) -> create_integrated_test.do -> CreateIntegratedTestAction
+-> created_integrated_tests.jsp -> created_integrated_test_score.do -> CreatedIntegratedTestScoreAction
+-. /jsps/testing/created_integrated_test_display.jsp
+
+<p>Path to a new class:
+/jsps/teacher/welcome_teacher.jsp /jsps/teacher/add_class.jsp add_class.do ->AddClassAction -> class_home.jsp
+class_home.jsp -> add_word_list.jsp - > AddWordListAction -> teacher_import_words.jsp -> TeacherImportWordAction -> teacher_import_words_result
+
+<p>creating saved tests for a class.
+/jsps/teacher/create_test_name.jsp -> com.businessglue.struts.teacher.CreateTestSaveAction -> create_test_save_result.jsp
+student_home.jsp -> student_details.jsp -> /indoct/recalculate_stats.do
+
+<p>Path to change the outcome of a test:
+/indoct/change_update_score.do -> com.businessglue.struts.ChangeUpdateScoreAction has two forwards:
+    <forward name="daily_test_result" path="/daily_test_result.jsp"/>
+    <forward name="integrated_test_result" path="/jsps/testing/integrated_test_result.jsp"/>
+
+</body>
+
+<p>IntegratedTestResult does the following:
+
+<ul>WordTestResult wtr = store.scoreSingleWordTest(awt, user_id);
+
+<p>AllWordsTest data kept on xml file
+	String text;
+	String definition;
+	String category;
+	String test_type;
+	<p>First we set the search criteria.  If it is a reading test, that means the user has seen the
+	word in a foreign language (the text element), and they have typed in the meaning in their own
+	language (the definition element), so we look for the original text element with the value from 
+	the AllWordsTest objet.
+	<p>Then we have to match the searched for text/definition, for a reading test, we want to match
+	the returnd definition with the field property of the test_form, which the user has typed in
+	to score the test as pass or fail.
+<p>The rest is done in wtr = scorer.scoreSingleWord(awt, word, user_options)
+<p>org.catechis.Scoring notes
+
+<p>	AllWordsTest
+<p>data kept on xml file
+	text;
+	definition;
+	category;
+	test_type;
+<p>users answers
+	answer;
+	
+<p>WordTestResult
+	text;
+	definition;
+	answer;
+	grade;
+	level;
+int id;
+	original_text;
+	original_definition;
+	original_level;
+<p>The Scorer applies these options from the users options file to alter the question and answers:
+String grade_whitespace = (String)user_options.get("grade_whitespace");
+	exclude_chars = (String)user_options.get("exclude_chars");
+	exclude_area = (String)user_options.get("exclude_area");
+	exclude_area_begin_char = (String)user_options.get("exclude_area_begin_char");
+	exclude_area_end_char = (String)user_options.get("exclude_area_end_char");
+	alternate_answer_separator = (String)user_options.get(" alternate_answer_separator");
+<p>The method scoreGrade is also called which increments the level of the word, limited by max_level option.
+<p>It sets all the information in the WordTestResult object and returns.
+
+				
+<ul>String new_level = store.recordWordTestScore(wtr, awt, max_level, test_name, user_id); // this updates the words level
+<p>Take a test result and update file for the words level and the test files record
+ words_jdom.recordWordScore(question, "pass", test_name, date, test_type, max_level);
+
+
+<ul>TestUtility.addDailyTestRecordIfNeeded(test_type, wtr, user_id, context_path, user_opts, awt.getId(), encoding);		
+<p>Next, add a record in the daily *type* tests.record file. 
+This also removes the word from the new word list if it is a pass test, 
+ and of course if the word in on the new <type> words.list in the first place.
+ The notes for this method are as follows:
+ 	<p>record the test in daily *type* tests.record file
+	this ads an element to the daily *type* tests.record file.
+	<p>The WordTestRecordOption object holds all the on off switches
+	 for what should be recorded in the file.  
+	<p>The FileTestRecords object does all the word of checking these
+	 options and then saving a record in the apporpriate file.
+	 While it at it, this method will remove the word from the new words list
+	 if the test is passed.
+	 Otherwise, all the work is done in FileTestRecords.addDailyTestRecord(wtr, wtro);
+	 by way of creating and setting a WordTestRecordOptions.
+<p> The method calls:
+<p>fjdomwl.removeWordFromNewWordsList
+<p>and
+<p>ftr.addDailyTestRecord	
+
+
+<ul>ftr.updateTestsStatus(user_id, subject);
+<p>This method increments the tests element in the status.xml file.
+<p>It is used in the DailyTestResultAction/IntegratedTestResultAction
+ and put in the session as daily_test_index.
+	
+TestTimeMemory ttm = wltd.updateTestDateRecordsAndReturnMemory(user_id, context_path, wtr);	

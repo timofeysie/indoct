@@ -1,0 +1,41 @@
+<%@ page contentType="text/html; charSet=euc-kr" %>
+
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+<%@ taglib uri="/WEB-INF/struts-html.tld" prefix="html" %>
+<%@ taglib uri="/WEB-INF/struts-logic.tld" prefix="logic" %>
+
+<%@ page language="java" import="org.catechis.file.FileCategories" %>
+<%@ page language="java" import="java.util.List" %>
+<%@ page language="java" import="java.util.ArrayList" %>
+<%@ page language="java" import="java.util.Hashtable" %>
+
+<html>
+<head><title><bean:message key="app.name"/> <bean:message key="app.slogan"/></title></head>
+<body>
+
+<p><b><bean:message key="categories.categories"/></b></p>
+<font color="red"><bean:message key="app.under_construction"/></font>
+<%
+Hashtable categories = (Hashtable)session.getAttribute("categories");
+FileCategories cats = new FileCategories();
+ArrayList categories_key_list = cats.getSortedKeys(categories);
+int it = 0;
+int size = categories_key_list.size();
+while (it<size)
+{
+	String key = (String)categories_key_list.get(it);
+	String name = (String)categories.get(key);
+	out.println("<p><a href=\"/indoct/user_file.do?filename="+name+"\">"+name+"</a></p>");
+	it++;
+}
+%>
+<p></p>
+<p><b><bean:message key="categories.options"/></b></p>
+<p><a href="/indoct/user_categories.do"><bean:message key="categories.statistics"/></a></p>
+<p><a href="/indoct/jsps/categories/add_category.jsp"><bean:message key="categories.add_category"/></a></p>
+<p><bean:message key="categories.search_for_word"/></p>
+<p></p>
+<a href="/indoct/user_welcome.jsp"><bean:message key="add_word.return_to_main"/></a>
+
+</body>
+</html>

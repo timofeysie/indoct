@@ -1,0 +1,107 @@
+package com.businessglue.struts.manager;
+
+import javax.servlet.http.*;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+import org.apache.struts.action.*;
+
+import java.util.Date;
+import java.util.Vector;
+import java.util.Hashtable;
+import java.util.Enumeration;
+import org.catechis.Storage;
+import org.catechis.dto.Word;
+import org.catechis.Domartin;
+import org.catechis.FileStorage;
+import org.catechis.filter.ImportListFilter;
+import com.businessglue.util.EncodeString;
+//import com.businessglue.util.I18NWebUtility; 
+
+import org.catechis.I18NWebUtility;
+import org.catechis.dto.Momento;
+import com.businessglue.struts.IndoctAction;
+import com.businessglue.struts.ImportListForm;
+import org.catechis.dto.WordLastTestDates;
+import org.catechis.constants.Constants;
+
+public class UserImportWordsAction extends IndoctAction
+{
+	
+	public ActionForward perform(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
+	{
+		HttpSession session = request.getSession(); 
+		ServletContext context = getServlet().getServletContext();
+		String user_id = (String)session.getAttribute("user_id");
+		String context_path = context.getRealPath("/WEB-INF/"); 
+		FileStorage store = new FileStorage(context_path, context);
+		Hashtable user_opts = store.getUserOptions(user_id, context_path);
+		String encoding = (String)user_opts.get("encoding");
+		String subject = (String)user_opts.get("subject");
+		context.log("ImportListAction.perform: user id "+user_id);
+		Momento old_m = getMomento(context_path, user_id, subject);
+		ImportListForm f = (ImportListForm) form;
+		String data = EncodeString.encodeThis(f.getText(),encoding);
+		String date = new String();
+		long long_time = 0;
+		try
+		{
+			date = f.getDate();		// mm/dd/yyyy
+			long_time = Domartin.getMillisecondsFromShortDate(date);
+		} catch (java.lang.NullPointerException npe)
+		{
+			// use current date
+		}
+		String word_separator = new String("=");
+		String line_separator = new String(";");
+		ImportListFilter ilf = new ImportListFilter();
+		Hashtable results = ilf.parse(data, word_separator, line_separator);
+		context.log("Results size "+results.size());
+		printLog(ilf.getLog(), context);
+		saveWords(long_time, results, store, session, encoding, context);
+		String file_name = old_m.getActionId();				// this file name was set in UserCategoriesAction
+		Hashtable words_defs = store.getWordsDefs(file_name, user_id);
+		session.setAttribute("words_defs", words_defs);
+		I18NWebUtility.forceContentTypeAndLocale(request, response, user_opts);
+		setMomento(context_path, user_id, subject, "UserImportWordsAction", file_name, "default");
+		return (mapping.findForward("back_to_list")); 
+	}
+	
+	private void saveWords(long long_time, Hashtable results, FileStorage store, HttpSession session, String encoding, ServletContext context)
+	{
+		for (Enumeration e = results.keys() ; e.hasMoreElements() ;) 
+		{
+			String text = (String)e.nextElement();
+			String definition = (String)results.get(text);
+			long id = Domartin.getNewID();
+			Word word = new Word();
+			if (long_time == 0)
+			{
+				Date date = new Date();
+				long_time = date.getTime();
+			}
+			word.setText(text);
+			word.setDefinition(definition);
+			word.setDateOfEntry(long_time);
+			word.setId(id);
+			String user_id = (String)session.getAttribute("user_id");
+			String file_name = (String)session.getAttribute("file_name");
+			store.addWord(word, file_name, user_id, encoding);
+			context.log("saveWords: added "+definition);
+		}
+		//printLog(store.getLog(), context);
+	}
+	
+	private void createLists(FileStorage store, String user_id, Vector elt_vector, String type)
+	{
+		// create lists
+		WordLastTestDates wltd = new WordLastTestDates();
+		wltd.setExcludeLevelTimes(elt_vector);
+		wltd.setType(type);
+		wltd.setLimitOfWords(100);
+		wltd.setSubject(Constants.VOCAB);
+		Vector all_word_categories = store.getWordCategories("exclusive", user_id);
+		wltd.createLists(all_word_categories, store, user_id);
+	}
+
+}

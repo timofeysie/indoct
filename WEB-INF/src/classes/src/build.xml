@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!DOCTYPE project [
+    <!ENTITY properties SYSTEM "../indoct/properties.xml">
+]>
+
+<project name="struts-login" basedir="." default="all">
+
+	<!-- Additional properties -->
+	<property name="src.dir" value="."/>
+	<property name="dist.path" value="/home/timmy/projects/dist"/>
+
+    <!-- Local system paths -->
+    <property name="servlet.jar" value="/home/timmy/apache-tomcat-6.0.20/lib/servlet-api.jar"/>
+    <property name="distpath.project" value="/projects/dist"/>
+    <!-- Project settings -->
+    <property name="project.title" value="Indoct"/>
+    <property name="project.distname" value="indoct"/>
+    <property name="project.version" value="1.1c"/>
+    <!-- Path settings -->
+    <property name="doc.path" value="./doc/api"/>
+    <property name="doc.src" value="./src"/>
+    <!-- classpath for Struts 1.1 -->
+    <path id="compile.classpath">
+        <pathelement path ="../lib/beanviews.jar"/>
+        <pathelement path ="../lib/commons-beanutils.jar"/>
+        <pathelement path ="../lib/commons-digester.jar"/>
+	<pathelement path ="../lib/commons-lang-2.1.jar"/>
+        <pathelement path ="../lib/struts.jar"/>
+	<pathelement path ="/home/timmy/apache-tomcat-7.0.5/lib/servlet-api.jar"/>
+	<pathelement path ="../lib/commons-logging.jar"/>
+	<pathelement path ="../lib/jaxen-core.jar"/>
+	<pathelement path ="../lib/jaxen-jdom.jar"/>
+	<pathelement path ="../lib/saxpath.jar"/>
+	<pathelement path ="../lib/jdom.jar"/>
+	<pathelement path ="../lib/catechis1.3.jar"/>
+	<pathelement path ="../lib/collections.jar"/>
+	<pathelement path ="../lib/commons-logging.jar"/>
+	<pathelement path ="../lib/commons-validator.jar"/>
+	<pathelement path ="../lib/jakarta-oro.jar"/>
+	<pathelement path ="../lib/xalan.jar"/>
+	<pathelement path ="../lib/xerces.jar"/>
+	<pathelement path ="../lib/xml-aps.jar"/>
+        <pathelement path ="classes"/>
+        <pathelement path ="${classpath}"/>
+    </path>
+
+    <!-- Check timestamp on files -->
+    <target name="prepare">
+    	<echo>Indoct 1.3 "Wade"</echo>
+        <tstamp/>
+    </target>
+
+    <!-- Remove classes directory for clean build -->
+    <target name="clean"
+      description="Prepare for clean build">
+      	 <echo>Clean</echo>
+         <delete dir="classes"/>
+         <mkdir  dir="classes"/>
+    </target>
+
+    <!-- Copy any resource or configuration files -->
+    <target name="resources" depends="clean">
+    	<echo>Resources</echo>
+        <copy todir="classes" includeEmptyDirs="no">
+            <fileset dir="../">
+            <patternset>
+                <include name="**/*.conf"/>
+                <include name="**/*.properties"/>
+                <include name="**/*.xml"/>
+            </patternset>
+            </fileset>
+        </copy>
+    </target>
+
+    <!-- Normal build of application -->
+    <target name="compile" depends="prepare,resources">
+    	<echo>Compile</echo>
+        <javac srcdir="." destdir="../classes">
+            <classpath refid="compile.classpath"/>
+        </javac>
+    </target>
+
+    <target name="war" depends="compile">
+    	<echo>Building war</echo>
+	<war 	warfile="${distpath.project}/${project.distname}.war" 
+		webxml="web.xml">
+	<fileset dir="../.."/>
+	<classes dir="."/>
+	<classes dir=".">
+		<include name="*.properties"/>
+	</classes>
+	<lib dir="${lib.dir}">
+		<include name="*.jar"/>
+		</lib>
+	</war>
+     </target>
+
+    <!-- Build entire project -->
+    <target name="project" depends="clean,prepare,compile"/>
+    
+    <!-- Create binary distribution -->
+    <target name="dist"
+        description="Create binary distribution">
+	<echo>Distribution</echo>
+	<war
+	    destfile="${dist.path}/${project.distname}.war"
+	    webxml="../web.xml">
+		<classes dir="/home/timmy/projects/indoct/WEB-INF/classes"/>
+		<webinf dir="../lib" includes="*.tld,*.dtd"/>
+		<fileset dir="../.." excludes="WEB-INF/web.xml"/>
+		<lib dir="../lib"/>
+	</war>
+    </target>
+
+    <!-- Build project and create distribution-->
+    <target name="all" depends="project,dist"/>
+
+</project>

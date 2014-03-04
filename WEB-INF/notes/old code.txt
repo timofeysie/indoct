@@ -1,0 +1,55 @@
+From integrated test
+
+if ((word.getId() == 0))
+			{
+				// exclude-level-times eliminate recently tested words from the list
+				WordLastTestDates wltd = new WordLastTestDates();
+				FileUserOptions fuo = new FileUserOptions();
+				Vector elt_vector = fuo.getELTVector(user_opts);		
+				wltd.setExcludeLevelTimes(elt_vector);
+				AllWordsTest awt = (AllWordsTest)session.getAttribute("awt_test_word");
+				String test_type = awt.getTestType();
+				String test_name = new String("level "+awt.getLevel()+" "+test_type+".test");
+				wltd.setType(test_type);
+				wltd.setLimitOfWords(100); // probably don't need this for integrated tests.
+				// get first word to test
+				String [] files = wltd.getWNTFiles(user_id, context_path);
+				String file = files[0]; 
+				String file_w_ext = file;
+				String file_wo_ext = Domartin.getFileWithoutExtension(file_w_ext);
+				String file_date = Transformer.getLongDateFromMilliseconds(file_wo_ext);
+				context.log("IntegratedTestAction.perform 1 if (word.getId() == 0)");
+				WordTestResult wtr = store.scoreSingleWordTest(awt, user_id);
+				wtr.setAnswer("null id");
+				String encoding = (String)user_opts.get("encoding");
+				wtr.setEncoding(encoding);
+				//String new_level = store.recordWordTestScore(wtr, awt, max_level, test_name, user_id); 
+				// this updates the words level
+				wtr.setLevel(awt.getLevel());
+				Date date = new Date();
+				long time = date.getTime();
+				String str_date = date.toString();
+				wtr.setDate(str_date);
+				// next, add a record in the daily *type* tests.record file. 
+				// this also removes the word from the new word list if it is a pass test, 
+				// and of course if the word in on the new <type> words.list
+				TestUtility tu = new TestUtility();
+				tu.addDailyTestRecordIfNeeded(test_type, wtr, user_id, context_path, 
+					user_opts, awt.getId(), encoding);		
+				ftr.updateTestsStatus(user_id, subject);
+				context.log("IntegratedTestAction.perform 2 if (word.getId() == 0)");
+				wtr = new WordTestResult();
+				wtr = new WordTestResult();
+				wtr.setWntdName(old_m.getActionId()+".xml");			
+				// was file[0] in test, now action_id... seems messy to add the xml ext here...
+				wtr.setWordId(awt.getId());
+				TestTimeMemory ttm = wltd.updateTestDateRecordsAndReturnMemory(user_id, context_path, wtr);
+			
+				// try again
+				word = wntds.getNextTestWord(user_id, context_path, action_time, subject);
+				action_id = wntds.getWordsNextTextDateFileName();// link to wntd file, same as next ???
+				wntd = wntds.getWordNextTestDate();	// the name of the next test date file
+				action_type = wntds.getNextTestType();
+				context.log("IntegratedTestAction.perform: next word ----- "+file);
+				old_m.setActionId(file);	
+			}

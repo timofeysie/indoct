@@ -1,0 +1,54 @@
+<head>
+</head>
+<body>
+<p>Running a Test Program Flow:
+<p>login.jsp
+<p>LoginAction.java
+<p>welcome.jsp
+<p>FileAction.java
+<p>test.jsp
+<p>ChooseTestFile.java
+<p>choose_test_file.jsp
+<p>TestAction
+<p>run_test.jsp
+
+<p>The path to create and score an integrated (reading & writing) test:
+<p>welcome.jsp -> tests.do -> TestsAction -> tests.jsp
+created_tests.do -> CreatedTestsAction -> created_integrated_tests.jsp
+create_integrated_test_name.jsp (form) -> create_integrated_test.do -> CreateIntegratedTestAction
+-> created_integrated_tests.jsp -> created_integrated_test_score.do -> CreatedIntegratedTestScoreAction
+-. /jsps/testing/created_integrated_test_display.jsp
+
+<p>Teachers Operations
+<p>Add a new class
+<p>/jsps/teacher/welcome_teacher.jsp /jsps/teacher/add_class.jsp add_class.do ->AddClassAction -> class_home.jsp
+
+<p>Old objects in the session:
+
+<p>LoginAction:
+<p>"content_type", content_type
+<p>"encoding", encoding
+<p>"locale", locale
+<p>"USER_KEY", user
+<p>"user_name", user_name
+<p>"user_path", user_folder
+
+<p>FileAction.xmlAction:
+<p>"file_name", file_name
+<p>"user_name", user_name
+<p>"user_path", user_path
+<p>"FILE_KEY", file_bean
+
+<p>FileAction.txtAction:
+<p>"FILE_KEY", file_bean
+
+<p>FileAction.optionsAction:
+<p>"FILE_KEY", file_bean
+
+<p>FileAction.testAction:
+<p>"TEST_KEY", test_bean
+<p>"test_length", length
+<p>"test_index", index
+<p>"test_levels", levels
+<p>"test_type", type
+</body>

@@ -1,0 +1,20 @@
+<%@ page contentType="text/html; charSet=ms949" %>
+<%@ taglib uri="/WEB-INF/struts-bean.tld" prefix="bean" %>
+
+<!-- . -->
+
+<html>
+
+<head>
+	<title><bean:message key="app.name"/> <bean:message key="app.slogan"/></title>
+</head>
+
+<body>
+
+	<frameset cols="*,*">
+		<frame src="/jsps/testing/daily_test_answer.jsp" name="left">
+		<frame src="/jsps/testing/daily_test_quest_word_lookup.jsp" name="right">
+	</frameset> 
+
+</body>
+</html>

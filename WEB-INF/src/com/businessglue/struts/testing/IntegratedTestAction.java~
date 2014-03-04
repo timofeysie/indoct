@@ -1,0 +1,223 @@
+package com.businessglue.struts.testing;
+
+import org.catechis.Storage;
+import org.catechis.Domartin;
+import org.catechis.FileStorage;
+import org.catechis.Transformer;
+import org.catechis.JDOMSolution;
+import org.catechis.WordTestDateUtility;
+import org.catechis.dto.Word;
+import org.catechis.dto.Momento;
+import org.catechis.dto.AllWordsTest;
+import org.catechis.dto.WordTestDates;
+import org.catechis.dto.WordTestResult;
+import org.catechis.dto.WordNextTestDate;
+import org.catechis.file.WordNextTestDates;
+import org.catechis.dto.WordLastTestDates;
+import org.catechis.file.FileTestRecords;
+import org.catechis.testing.TestUtility;
+import org.catechis.I18NWebUtility;
+import org.catechis.gwangali.RateOfTesting;
+import org.catechis.constants.Constants;
+
+import java.io.File;
+import java.util.Date;
+import java.util.Vector;
+import java.util.Hashtable;
+import java.util.ArrayList;
+
+import org.apache.struts.action.Action;
+import org.apache.struts.action.ActionForm;
+import org.apache.struts.action.ActionForward;
+import org.apache.struts.action.ActionMapping;
+
+import javax.servlet.ServletContext;
+import javax.servlet.http.HttpSession;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+// if the word is null
+import org.catechis.dto.WordTestResult;
+import org.catechis.dto.WordLastTestDates;
+import org.catechis.admin.FileUserOptions;
+import org.catechis.juksong.TestTimeMemory;
+
+/**
+*<p>This can be ither a reading or a writing test.
+*/
+public class IntegratedTestAction extends Action
+{
+	
+	/**
+	*<p>The Momento Object has the following meanings:
+	*<p>action_name = Name of the action used in the web app
+	*<p>action_time = Time the action was initiated
+	*<p>action_id   = uses this id to get the wntd object, which has a link to the wltd so it can erase those files and create new ones
+	*<p>action_type = Extra info, such as the test type, or whatever the action chooses to use this info for
+	*<p>
+	*<p>
+	*<p>AllWordsTest is the only object in the session and has the following member variables.
+	*<p>data kept on xml file
+	*<p>String text;
+	*<p>String definition;
+	*<p>String category;
+	*<p>String test_type;
+	*<p>String level;
+	*<p>int daily_test_index;
+	*<p>long id;
+	*<p>This was used to store the users answer in the past.
+	*<p>String answer;
+	*/
+	public ActionForward perform(ActionMapping mapping, 
+		ActionForm form, 
+		HttpServletRequest request, 
+		HttpServletResponse response)
+	{
+		HttpSession session = request.getSession();
+		ServletContext context = getServlet().getServletContext();
+		String user_id = (String)session.getAttribute("user_id");
+		context.log("IntegratedTestAction.perform: user id "+user_id);
+		String context_path = context.getRealPath("/WEB-INF/");
+		Storage store = new FileStorage(context_path, context);
+		Hashtable user_opts = store.getUserOptions(user_id, context_path);
+		String subject = (String)user_opts.get("subject");
+		FileTestRecords ftr = new FileTestRecords(context_path);
+		Momento old_m = ftr.getMomentoObject(user_id, subject);
+		if (old_m.getActionName().equals("IntegratedTestAction"))
+		{
+			// double click, so dont erase old word?
+			context.log("IntegratedTestAction.perform: double click?  Momento already says IntegratedTestAction");
+		} 
+		// load a new word
+		String action_time = Long.toString(new Date().getTime());
+		WordNextTestDates wntds = new WordNextTestDates();
+		Word word = new Word();
+		String action_id = "000";
+		String action_type = "000";
+		WordNextTestDate wntd = new WordNextTestDate();
+		try
+		{
+			word = wntds.getNextTestWord(user_id, context_path, action_time, subject);
+			action_id = wntds.getWordsNextTextDateFileName();// link to wntd file, same as next ???
+			wntd = wntds.getWordNextTestDate();	// the name of the next test date file
+			action_type = wntds.getNextTestType();
+			context.log("IntegratedTestAction.perform: word ----- ");
+			while (!word.getId() == 0)
+			{
+				// exclude-level-times eliminate recently tested words from the list
+				WordLastTestDates wltd = new WordLastTestDates();
+				FileUserOptions fuo = new FileUserOptions();
+				Vector elt_vector = fuo.getELTVector(user_opts);		
+				wltd.setExcludeLevelTimes(elt_vector);
+				AllWordsTest awt = (AllWordsTest)session.getAttribute("awt_test_word");
+				String test_type = awt.getTestType();
+				String test_name = new String("level "+awt.getLevel()+" "+test_type+".test");
+				wltd.setType(test_type);
+				wltd.setLimitOfWords(100); // probably don't need this for integrated tests.
+				// get first word to test
+				String [] files = wltd.getWNTFiles(user_id, context_path);
+				String file = files[0]; 
+				String file_w_ext = file;
+				String file_wo_ext = Domartin.getFileWithoutExtension(file_w_ext);
+				String file_date = Transformer.getLongDateFromMilliseconds(file_wo_ext);
+				context.log("IntegratedTestAction.perform 1 if (word.getId() == 0)");
+				WordTestResult wtr = store.scoreSingleWordTest(awt, user_id);
+				wtr.setAnswer("null id");
+				String encoding = (String)user_opts.get("encoding");
+				wtr.setEncoding(encoding);
+				//String new_level = store.recordWordTestScore(wtr, awt, max_level, test_name, user_id); 
+				// this updates the words level
+				wtr.setLevel(awt.getLevel());
+				Date date = new Date();
+				long time = date.getTime();
+				String str_date = date.toString();
+				wtr.setDate(str_date);
+				// next, add a record in the daily *type* tests.record file. 
+				// this also removes the word from the new word list if it is a pass test, 
+				// and of course if the word in on the new <type> words.list
+				TestUtility tu = new TestUtility();
+				tu.addDailyTestRecordIfNeeded(test_type, wtr, user_id, context_path, 
+					user_opts, awt.getId(), encoding);		
+				ftr.updateTestsStatus(user_id, subject);
+				context.log("IntegratedTestAction.perform 2 if (word.getId() == 0)");
+				wtr = new WordTestResult();
+				wtr = new WordTestResult();
+				wtr.setWntdName(old_m.getActionId()+".xml");			
+				// was file[0] in test, now action_id... seems messy to add the xml ext here...
+				wtr.setWordId(awt.getId());
+				TestTimeMemory ttm = wltd.updateTestDateRecordsAndReturnMemory(user_id, context_path, wtr);
+			
+				// try again
+				word = wntds.getNextTestWord(user_id, context_path, action_time, subject);
+				action_id = wntds.getWordsNextTextDateFileName();// link to wntd file, same as next ???
+				wntd = wntds.getWordNextTestDate();	// the name of the next test date file
+				action_type = wntds.getNextTestType();
+				context.log("IntegratedTestAction.perform: next word ----- "+file);
+				old_m.setActionId(file);	
+			}
+			printLog(Transformer.createTable(word), context);
+		} catch (java.lang.NullPointerException npe)
+		{
+			context.log("IntegratedTestAction.perform: npe from wntd: wntd log --- ");
+			printLog(wntds.getLog(), context);
+		}
+		Momento new_m = new Momento("IntegratedTestAction", action_time, action_id, action_type);
+		ftr.setMomentoObject(user_id, subject, new_m);
+		String daily_test_index = incrementDailyTestIndex(session);
+		int grand_test_index = getNewGrandIndex(user_id, subject, context, ftr);
+		RateOfTesting rot = new RateOfTesting();			// get ROT values
+		Vector rot_reading_vector = rot.getROTVector(Constants.READING, user_id, subject, context_path);
+		Vector rot_writing_vector = rot.getROTVector(Constants.WRITING, user_id, subject, context_path);
+		AllWordsTest awt = TestUtility.setupAllWordsTest(word, action_type, grand_test_index);
+		context.log("IntegratedTestAction.perform: Transformer awt --- ");
+		context.log("AllWordsTest --------"); 
+		printLog(Transformer.createTable(awt), context);
+		session.setAttribute("rot_reading_vector", rot_reading_vector);
+		session.setAttribute("rot_writing_vector", rot_writing_vector);
+		session.setAttribute("daily_test_index", daily_test_index);
+		session.setAttribute("grand_index", Integer.toString(grand_test_index));
+		session.setAttribute("awt_test_word", awt);
+		context.log("IntegratedTestAction.perform: new word loaded ");
+	
+		// prepare grand test index and the session test count and how many tests are left.
+		// how do we exclude a writing test for a word that has just be tested with a reading test?
+		I18NWebUtility.forceContentTypeAndLocale(request, response, user_opts);
+		return (mapping.findForward("integrated_test"));
+	}
+	
+	private int getNewGrandIndex(String user_id, String subject, ServletContext context, FileTestRecords ftr)
+	{
+		int grand_index = 0;
+		try
+		{
+			grand_index = ftr.getTestsStatus(user_id, subject);	// this gets the the grand total of tests
+			context.log("IntegratedTestAction.getNewGrandIndex: grand_index is "+grand_index);
+		} catch (java.lang.NullPointerException npe)
+		{
+			//printLog(ftr.getLog(), context);
+			context.log("IntegratedTestAction.getNewGrandIndex: grand_index is null");
+		}
+		return grand_index;
+	}
+	
+	private String incrementDailyTestIndex(HttpSession session)
+	{
+		int daily_test_index = 0;
+		String dti = (String)session.getAttribute("daily_test_index");
+		daily_test_index = Integer.parseInt(dti);
+		daily_test_index = daily_test_index + 1;
+		return Integer.toString(daily_test_index);
+	}
+			
+	private void printLog(Vector log, ServletContext context)
+	{
+		int total = log.size();
+		int i = 0;
+		while (i<total)
+		{
+			context.log("IntegratedTestAction.log "+(String)log.get(i));
+			i++;
+		}
+	}
+
+}

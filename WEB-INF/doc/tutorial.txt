@@ -1,0 +1,5 @@
+This is a tutorial for using this website to study languages.
+
+The idea is to take fequent self tests to create new lists of vocaulary containing the words that need to be studied the most.
+Even words which are known at one point will fade in the memory, so they must be tested after a certain time.
+

@@ -1,0 +1,13 @@
+
+The following caused a class cast exeption in the file.jsp page.
+Strangely, it only thre this after if had worked for other files.
+After a successful run, then clicking back, the programs halts.
+So I'm trying a session attribute instead of a bean.
+
+FileBean file_bean = (FileBean)session.getAttribute("FILE_KEY");
+Hashtable text_defs  = file_bean.getWordsDefs();
+
+We put all the needed variables into the session object and this solved out problem
+Really the use of beas is just organizational, and at this point there is only a handful of variables
+anyway, so it's not a problem now.  If it becomes a problem we may want to revisit
+trying to use special purpose beans to group variables.
