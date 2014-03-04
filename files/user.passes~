@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<passwords>
+	<invitation_code>there can b only 1</invitation_code>
+	<user>
+		<id>-5519451928541341007</id>
+		<name>admin</name>
+		<password>admin</password>
+	</user>
+	<user>
+		<id>0000000000000000001</id>
+		<name>teach</name>
+		<password>teach</password>
+	</user>
+	<user>
+		<id>-5519451928541341407</id>
+		<name>guest</name>
+		<password>pass</password>
+	</user>
+	<user>
+		<id>-5519451928541341468</id>
+		<name>t</name>
+		<password>t</password>
+	</user>
+	<user>
+		<id>-1135042482416826298</id>
+		<name>amy</name>
+		<password>amy</password>
+		<e_mail>asdf</e_mail>
+	</user>
+<user><id>-5810489237107178737</id><name>jessie</name><password>jessie</password><e_mail>iii</e_mail></user>
+<user><id>3654028632667884215</id><name>parkie</name><password>parkie</password><e_mail>???</e_mail></user>
+<user><id>230025377069534176</id><name>buster</name><password>buster</password><e_mail>asdf</e_mail></user>
+<user><id>-7028961644117975960</id><name>onnuri</name><password>onnuri1</password><e_mail>lll@lll.com</e_mail></user>
+<user><id>-5540627131807205875</id><name>jisu</name><password>jisu2</password><e_mail>l@l.l</e_mail></user>
+<user><id>5243950864034398434</id><name>youngbom</name><password>youngbom3</password><e_mail>lll@lll.com</e_mail></user>
+<user><id>567228702497511456</id><name>suejin</name><password>suejin4</password><e_mail>l@l.l</e_mail></user>
+<user><id>-5131310809878723870</id><name>eunji</name><password>eunji5</password><e_mail>l@l.com</e_mail></user>
+<user><id>1751170225802643191</id><name>hyunjin</name><password>hyunjin6</password><e_mail>l@l.l</e_mail></user>
+<user><id>3360626017352856550</id><name>gyeongjin</name><password>gyeongjin7</password><e_mail>l@l.l</e_mail></user>
+<user><id>500169251790177451</id><name>ahyun</name><password>ahyun8</password><e_mail>l@l.l</e_mail></user>
+<user><id>6244393821677067058</id><name>chehee</name><password>chehee9</password><e_mail>l</e_mail></user>
+<user><id>7946057380387841280</id><name>hyerin</name><password>hyerin10</password><e_mail>l@l.l</e_mail></user>
+<user><id>4201001381186235795</id><name>jubong</name><password>jubong</password><e_mail>asdf</e_mail></user>
+<user><id>-203866043849428904</id><name>veronica</name><password>veronica</password><e_mail>gfgfdsgfsd</e_mail></user>
+<user><id>-5042410596867566986</id><name>amy</name><password>amy</password><e_mail>amy</e_mail></user><user><id>-5666306060896239592</id><name>nue1</name><password>nue1</password><e_mail>the</e_mail></user>
+
+<user><id>5954006310984857193</id><name>beavis</name><password>beavis</password><e_mail>iii</e_mail></user>
+
+</passwords>

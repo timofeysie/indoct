@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="euc-kr"?>
+<status>
+	<daily_test_index>0:0</daily_test_index>
+	<daily_test_file>0</daily_test_file>
+	<tests>39835</tests>
+	<passed_tests>0</passed_tests>
+	<failed_tests>0</failed_tests>
+	<reversed_tests>0</reversed_tests>
+	<action_name>IntegratedTestResultAction</action_name>
+	<action_time>1393910566049</action_time>
+	<action_id>IntegratedTestResultAction</action_id>
+	<action_type>default</action_type>
+	<daily_session_tests>6</daily_session_tests>
+	<daily_session_start>1393909723915</daily_session_start>
+	<number_of_tests>168</number_of_tests>
+	<average_score>49.67261904761905</average_score>
+	<number_of_words>2409</number_of_words>
+	<writing_average>2.5929531757070006</writing_average>
+	<reading_average>2.7644877144181734</reading_average>
+	<words_at_reading_level_0>10</words_at_reading_level_0>
+	<words_at_reading_level_1>21</words_at_reading_level_1>
+	<words_at_reading_level_2>355</words_at_reading_level_2>
+	<words_at_reading_level_3>1751</words_at_reading_level_3>
+	<words_at_writing_level_0>51</words_at_writing_level_0>
+	<words_at_writing_level_1>70</words_at_writing_level_1>
+	<words_at_writing_level_2>520</words_at_writing_level_2>
+	<words_at_writing_level_3>1496</words_at_writing_level_3>
+	<word_test_start>1393910549970</word_test_start>
+	<word_test_elapsed_time>81612</word_test_elapsed_time>
+	<number_of_sessions>0</number_of_sessions>
+	<week_of_year>10</week_of_year>
+	<number_of_tests_in_week>6</number_of_tests_in_week>
+	<number_of_retired_words>272</number_of_retired_words>
+	<date>1391148927952</date>
+</status>

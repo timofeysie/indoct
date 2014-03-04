@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<passwords>
+	<invitation_code>there can b only 1</invitation_code>
+	<user>
+		<id>-5519451928541341007</id>
+		<name>admin</name>
+		<password>admin</password>
+	</user>
+	<user>
+		<id>0000000000000000001</id>
+		<name>teach</name>
+		<password>teach</password>
+	</user>
+	<user>
+		<id>-5519451928541341468</id>
+		<name>Timothy</name>
+		<password>t</password>
+	</user>
+	<user>
+		<id>-3963821438296123363</id>
+		<name>one</name>
+		<password>one</password>
+		<e_mail>one@hot.com</e_mail>
+	</user>
+	<user>
+		<id>91971116904032786</id>
+		<name>two</name>
+		<password>two</password>
+		<e_mail />
+	</user>
+	<user>
+		<id>-4532926416625862117</id>
+		<name>s3</name>
+		<password>s3</password>
+		<e_mail /></user>
+	<user>
+		<id>4275947837592331318</id>
+		<name>s2</name>
+		<password>s2</password>
+		<e_mail /></user>
+	<user>
+		<id>7655807335881695697</id>
+		<name>s1</name>
+		<password>s1</password>
+		<e_mail>1@2.com</e_mail>
+	</user>
+	<user>
+		<id>-1077226436972872449</id>
+		<name>wntd</name>
+		<password>wntd</password>
+		<e_mail>ddd</e_mail>
+	</user>
+	<user>
+		<id>8250833223160185781</id>
+		<name>Ester</name>
+		<password>e</password>
+		<e_mail>ggg</e_mail>
+	</user>
+<user><id>4021082304765342672</id><name>Jason</name><password>j</password><e_mail>jjj@jjj.com</e_mail></user><user><id>-1712841400330652529</id><name>Woo-Cheol</name><password>w</password><e_mail>ddd</e_mail></user><user><id>-3720491892931825837</id><name>Woo4</name><password>w</password><e_mail>asd@asd</e_mail></user><user><id>-5476321391929238236</id><name>Myeong-ju</name><password>m</password><e_mail>sdf</e_mail></user>
+	<user>
+		<id>8346639709184370101</id>
+		<name>Daeyeong</name>
+		<password>hdy</password>
+		<e_mail>sdf</e_mail></user>
+	</passwords>
