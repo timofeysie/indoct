@@ -7,11 +7,11 @@
 
 	<!-- Additional properties -->
 	<property name="src.dir" value="."/>
-	<property name="dist.path" value="/home/timmy/projects/dist"/>
+	<property name="dist.path" value="/home/timothy/projects/dist"/>
 
     <!-- Local system paths -->
-    <property name="servlet.jar" value="/home/timmy/apache-tomcat-6.0.20/lib/servlet-api.jar"/>
-    <property name="distpath.project" value="/projects/dist"/>
+    <property name="servlet.jar" value="..lib/servlet-api.jar"/>
+    <property name="distpath.project" value="home/timothy/java/dist"/>
     <!-- Project settings -->
     <property name="project.title" value="Indoct"/>
     <property name="project.distname" value="indoct"/>
@@ -105,7 +105,7 @@
 	<war
 	    destfile="${dist.path}/${project.distname}.war"
 	    webxml="../web.xml">
-		<classes dir="/home/timmy/projects/indoct/WEB-INF/classes"/>
+		<classes dir="/home/timothy/java/indoct/WEB-INF/classes"/>
 		<webinf dir="../lib" includes="*.tld,*.dtd"/>
 		<fileset dir="../.." excludes="WEB-INF/web.xml"/>
 		<lib dir="../lib"/>
